@@ -14,7 +14,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./mysql:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     networks:
       - symfony-network
 
@@ -51,3 +51,8 @@ services:
 
 networks:
   symfony-network:
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
