@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+{% include '@Admin/partials/_head.html.twig' %}
+<body>
+
+    <style>
+        .content{
+            height: 100vh;
+        }
+    </style>
+
+    <main class="d-flex flex-nowrap">
+        {% include '@Admin/partials/_sidebar_menu.html.twig' %}
+
+        <div class="flex-fill content px-5">
+
+            {% block page_title %}
+            {% endblock %}
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+
+</body>
+</html>
