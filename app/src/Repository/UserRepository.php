@@ -56,6 +56,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+
+    /**
+     * @return User[] with only specific fields
+     */
+    public function findAllWithFields(string $alias, array $fields): array
+    {
+        return $this->createQueryBuilder($alias)
+            ->select($fields)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
