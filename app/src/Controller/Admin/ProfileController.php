@@ -48,7 +48,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('admin_profile');
         }
 
-        return $this->renderForm('admin/pages/profile/index.html.twig', [
+        return $this->render('admin/pages/profile/index.html.twig', [
             'user_profile_form' => $userProfileForm
         ]);
     }

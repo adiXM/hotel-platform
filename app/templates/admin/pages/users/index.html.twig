@@ -1,0 +1,88 @@
+{# templates/login/index.html.twig #}
+{% extends '@Admin/adminbase.html.twig' %}
+{% block page_title %}
+    <div class="text-center"><h1>Users</h1></div>
+{% endblock %}
+{% block content %}
+    <div class="container">
+
+
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newUserModal">New User</button>
+
+        <div id="users">Loading...</div>
+
+
+        <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="newUserModalLabel">New user</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {{ form_start(form) }}
+
+                    {{ form_errors(form) }}
+
+                    <div class="modal-body">
+                        {{ form_row(form.FirstName) }}
+
+                        {{ form_row(form.LastName) }}
+
+                        {{ form_row(form.Email) }}
+
+                        {{ form_row(form.plainPassword) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{ form_row(form.save) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        const exampleModal = document.getElementById('exampleModal')
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+
+            const recipient = button.getAttribute('data-bs-whatever')
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+            const modalTitle = exampleModal.querySelector('.modal-title')
+            const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+            modalTitle.textContent = `New message to ${recipient}`
+            modalBodyInput.value = recipient
+        })
+    </script>
+
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+    <script>
+        $(function() {
+            $('#users').initDataTables({{ datatable_settings(userTable) }}, {
+                searching: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    'copy',
+                    {extend: 'pdf', title: 'domains'},
+                    {extend: 'print'}
+                ]
+            }).then(function (dt) {
+                // dt contains the initialized instance of DataTables
+                dt.on('draw', function () {
+
+                })
+            });
+        });
+    </script>
+
+{% endblock %}
