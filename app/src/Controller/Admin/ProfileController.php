@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\UserPasswordProfileType;
 use App\Form\UserProfileType;
-use App\Service\UserServiceManager;
+use App\Service\UserManagerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,7 @@ class ProfileController extends AbstractController
 {
 
     public function __construct(
-        private readonly UserServiceManager $userService
+        private readonly UserManagerService $userService
     ) {
 
     }

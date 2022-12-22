@@ -5,14 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\UserProfileType;
 use App\Service\TableService;
-use App\Service\UserServiceManager;
+use App\Service\UserManagerService;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\TextColumn;
-use Omines\DataTablesBundle\Column\TwigStringColumn;
-use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +17,7 @@ class UserController extends AbstractController
 {
 
     public function __construct(
-        private readonly UserServiceManager $userServiceManager,
+        private readonly UserManagerService $userServiceManager,
         private readonly TableService $tableService)
     {
     }

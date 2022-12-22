@@ -13,7 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  * Use repository for fetch data
  * User entity manager for persist, flush..etc
  */
-class UserServiceManager
+class UserManagerService
 {
     private ObjectManager $entityManager;
 
