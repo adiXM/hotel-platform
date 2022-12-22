@@ -14,6 +14,11 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+        <div class="container">
+            {% include 'pages/partials/_menu.html.twig' %}
+            {% block content %}
+            {% endblock %}
+        </div>
     </body>
 </html>
