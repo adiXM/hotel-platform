@@ -7,7 +7,7 @@ use Omines\DataTablesBundle\DataTableFactory;
 
 class TableService
 {
-    public function __construct(private DataTableFactory $dataTableFactory)
+    public function __construct(private readonly DataTableFactory $dataTableFactory)
     {
     }
 

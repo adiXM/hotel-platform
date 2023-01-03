@@ -15,11 +15,11 @@ use App\Table\UserTableType;
 
 class UserController extends AbstractController
 {
-
     public function __construct(
         private readonly UserManagerService $userServiceManager,
         private readonly TableService $tableService)
     {
+
     }
 
     #[Route('/admin/users', name: 'admin_users')]
@@ -30,7 +30,7 @@ class UserController extends AbstractController
 
         $table = $this->tableService->createTableType(UserTableType::class)
             ->createAdapter(ArrayAdapter::class, $this->userServiceManager->getUserList())
-            ->handleRequest($request);;
+            ->handleRequest($request);
 
         if ($table->isCallback()) {
             return $table->getResponse();
