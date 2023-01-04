@@ -9,18 +9,18 @@
         }
     </style>
 
-    <main class="d-flex flex-nowrap">
-        {% include '@Admin/partials/_sidebar_menu.html.twig' %}
+    {% include '@Admin/partials/_header.html.twig' %}
 
-        <div class="flex-fill content px-5">
-
+    <main>
+        <div class="container">
             {% block page_title %}
             {% endblock %}
 
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
-                    <div class="flash-{{ label }}">
+                    <div class="alert alert-{{ label }} alert-dismissible fade show">
                         {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
             {% endfor %}

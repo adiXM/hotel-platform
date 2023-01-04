@@ -16,7 +16,7 @@ class Room
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column]
+    #[ORM\Column(unique: true)]
     private ?int $room_number = null;
 
     #[ORM\Column]
