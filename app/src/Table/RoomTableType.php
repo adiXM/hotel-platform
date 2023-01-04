@@ -19,7 +19,7 @@ class RoomTableType implements DataTableTypeInterface
             ->add('active', BoolColumn::class, ['label' => 'Active'])
             ->add('actions', TwigStringColumn::class, [
                 'label' => 'Actions',
-                'template' => '<a class="btn btn-secondary" role="button" href="{{ path(\'admin_edit_users\', {id: row.id}) }}">Manage</a><button type="button" class="ms-2 btn btn-danger btn-delete" data-roomId="{{ row.id }}" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                'template' => '<a class="btn btn-secondary" role="button" href="{{ path(\'admin_edit_room\', {id: row.id}) }}">Manage</a><button type="button" class="ms-2 btn btn-danger btn-delete" data-roomId="{{ row.id }}" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
                         Delete
                     </button>',
             ]);

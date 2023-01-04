@@ -3,28 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Room;
-use App\Entity\User;
 use App\Form\DeleteFormType;
-use App\Form\RoomEditType;
 use App\Form\RoomTypeForm;
-use App\Service\RoomManagerInterface;
-use App\Service\TableService;
 use App\Table\RoomTableType;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-class RoomController extends AbstractController
+class RoomTypeController
 {
-    public function __construct(
-        private readonly TableService $tableService,
-        private readonly RoomManagerInterface $roomManagerService,
-    )
-    {
-    }
-
     #[Route('/admin/rooms', name: 'admin_rooms')]
     public function index(Request $request): Response
     {
@@ -83,38 +70,6 @@ class RoomController extends AbstractController
             'form' => $roomForm->createView(),
             'deleteForm' => $deleteForm->createView(),
             'roomsTable' => $table
-        ]);
-    }
-
-    #[Route('/admin/rooms/{id}', name: 'admin_edit_room')]
-    public function edit(Room $room, Request $request)
-    {
-        $hasAccess = $this->isGranted('ROLE_ADMIN');
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        $roomEditForm = $this->createForm(RoomEditType::class, $room);
-
-        $roomEditForm->handleRequest($request);
-
-        if ($roomEditForm->isSubmitted() && $roomEditForm->isValid()) {
-
-            /** @var Room $roomData */
-            $roomData = $roomEditForm->getData();
-
-            try {
-                $this->roomManagerService->updateRoom($roomData);
-
-                $this->addFlash('notice', 'Your changes were saved!');
-
-            } catch (\Exception $ex) {
-                $this->addFlash('danger', $ex->getMessage());
-            }
-
-            return $this->redirectToRoute('admin_edit_room', ['id' => $roomData->getId()]);
-        }
-
-        return $this->render('admin/pages/rooms/singlepage.html.twig', [
-            'form' => $roomEditForm->createView(),
         ]);
     }
 }
