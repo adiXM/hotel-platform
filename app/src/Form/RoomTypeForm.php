@@ -23,7 +23,9 @@ class RoomTypeForm extends AbstractType
             ->add('roomNumber', NumberType::class)
             ->add('price', TextType::class)
             ->add('active', CheckboxType::class)
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'row_attr' => ['class' => 'mb-auto'],
+            ])
         ;
 
     }

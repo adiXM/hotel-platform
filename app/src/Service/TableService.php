@@ -16,5 +16,10 @@ class TableService
         return $this->dataTableFactory->createFromType($tableType);
     }
 
+    public function createTable(): DataTable
+    {
+        return $this->dataTableFactory->create();
+    }
+
 
 }

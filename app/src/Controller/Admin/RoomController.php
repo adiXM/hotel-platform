@@ -3,14 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Room;
-use App\Entity\User;
+use App\Form\DeleteFormType;
 use App\Form\RoomTypeForm;
-use App\Form\UserProfileType;
 use App\Service\RoomManagerInterface;
 use App\Service\TableService;
 use App\Table\RoomTableType;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +18,7 @@ class RoomController extends AbstractController
 {
     public function __construct(
         private readonly TableService $tableService,
-        private readonly RoomManagerInterface $roomManagerService
+        private readonly RoomManagerInterface $roomManagerService,
     )
     {
     }
@@ -41,7 +39,6 @@ class RoomController extends AbstractController
         $room = new Room();
 
         $roomForm = $this->createForm(RoomTypeForm::class, $room);
-
         $roomForm->handleRequest($request);
 
         if ($roomForm->isSubmitted() && $roomForm->isValid()) {
@@ -49,15 +46,40 @@ class RoomController extends AbstractController
             /** @var Room $roomFormData */
             $roomFormData = $roomForm->getData();
 
-            $this->roomManagerService->updateRoom($roomFormData);
+            try {
+                $this->roomManagerService->updateRoom($roomFormData);
 
-            $this->addFlash('notice', 'Your changes were saved!');
+                $this->addFlash('success', 'Your changes were saved!');
+
+            } catch (\Exception $ex) {
+                $this->addFlash('danger', $ex->getMessage());
+            }
+
+            return $this->redirectToRoute('admin_rooms');
+        }
+
+        $deleteForm = $this->createForm(DeleteFormType::class);
+        $deleteForm->handleRequest($request);
+
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+
+            $roomId = $deleteForm->get('roomId')->getData();
+
+            try {
+                $this->roomManagerService->removeRoom($roomId);
+
+                $this->addFlash('success', 'Your changes were saved!');
+
+            } catch (\Exception $ex) {
+                $this->addFlash('danger', $ex->getMessage());
+            }
 
             return $this->redirectToRoute('admin_rooms');
         }
 
         return $this->render('admin/pages/rooms/index.html.twig', [
             'form' => $roomForm->createView(),
+            'deleteForm' => $deleteForm->createView(),
             'roomsTable' => $table
         ]);
     }

@@ -38,9 +38,25 @@ class RoomManagerService implements RoomManagerInterface
         return $roomsCollection->toArray();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function updateRoom(Room $room): void
     {
+        $existingRooms = $this->repository->findBy(['room_number' => $room->getRoomNumber()]);
+
+        if(\count($existingRooms) > 0) {
+            throw new \Exception(sprintf("Room with number %s already exists.", $room->getRoomNumber()));
+        }
         $this->entityManager->persist($room);
+        $this->entityManager->flush();
+    }
+
+    public function removeRoom(string $roomId): void
+    {
+        /** @var Room $room */
+        $room = $this->repository->find($roomId);
+        $this->entityManager->remove($room);
         $this->entityManager->flush();
     }
 }
