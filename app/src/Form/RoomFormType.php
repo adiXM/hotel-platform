@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RoomTypeForm extends AbstractType
+class RoomFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -43,11 +43,7 @@ class RoomManagerService implements RoomManagerInterface
      */
     public function updateRoom(Room $room): void
     {
-        $existingRooms = $this->repository->findBy(['room_number' => $room->getRoomNumber()]);
 
-        if(\count($existingRooms) > 0) {
-            throw new \Exception(sprintf("Room with number %s already exists.", $room->getRoomNumber()));
-        }
         $this->entityManager->persist($room);
         $this->entityManager->flush();
     }

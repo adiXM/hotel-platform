@@ -6,10 +6,11 @@ use App\Entity\Room;
 use App\Entity\User;
 use App\Form\DeleteFormType;
 use App\Form\RoomEditType;
-use App\Form\RoomTypeForm;
+use App\Form\RoomFormType;
 use App\Service\RoomManagerInterface;
 use App\Service\TableService;
 use App\Table\RoomTableType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,7 @@ class RoomController extends AbstractController
 
         $room = new Room();
 
-        $roomForm = $this->createForm(RoomTypeForm::class, $room);
+        $roomForm = $this->createForm(RoomFormType::class, $room);
         $roomForm->handleRequest($request);
 
         if ($roomForm->isSubmitted() && $roomForm->isValid()) {
@@ -106,8 +107,13 @@ class RoomController extends AbstractController
 
                 $this->addFlash('notice', 'Your changes were saved!');
 
-            } catch (\Exception $ex) {
-                $this->addFlash('danger', $ex->getMessage());
+            } catch (\Exception | UniqueConstraintViolationException $ex) {
+                if($ex instanceof  UniqueConstraintViolationException) {
+                    $this->addFlash('danger', sprintf("Room with number %s already exists.", $roomData->getRoomNumber()));
+                } else {
+                    $this->addFlash('danger', $ex->getMessage());
+                }
+
             }
 
             return $this->redirectToRoute('admin_edit_room', ['id' => $roomData->getId()]);
