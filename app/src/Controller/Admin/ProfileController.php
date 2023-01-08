@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\UserPasswordProfileType;
 use App\Form\UserProfileType;
-use App\Service\UserManagerService;
+use App\Service\EntityManagerServices\UserManagerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\UserProfileType;
-use App\Service\CustomerManagerService;
+use App\Service\EntityManagerServices\CustomerManagerService;
 use App\Service\TableService;
 use App\Table\UserTableType;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;

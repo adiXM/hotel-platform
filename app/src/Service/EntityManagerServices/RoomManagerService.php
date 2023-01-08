@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\EntityManagerServices;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
+use App\Service\EntityManagerServices\RoomManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;

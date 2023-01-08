@@ -15,6 +15,8 @@ class RoomTypeEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('name', TextType::class)
+            ->add('description', TextareaType::class)
             ->add('amenities', EntityType::class, [
                 'class' => Amenity::class,
                 'label_html' => true,
@@ -29,8 +31,6 @@ class RoomTypeEditType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
-            ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
             ->add('save', SubmitType::class, [
                 'row_attr' => ['class' => 'mb-auto'],
             ])

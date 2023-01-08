@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\UserProfileType;
+use App\Service\EntityManagerServices\UserManagerService;
 use App\Service\TableService;
-use App\Service\UserManagerService;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

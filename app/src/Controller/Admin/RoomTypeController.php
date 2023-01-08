@@ -9,7 +9,7 @@ use App\Form\RoomEditType;
 use App\Form\RoomFormType;
 use App\Form\RoomTypeEditType;
 use App\Form\RoomTypeFormType;
-use App\Service\RoomTypeManagerInterface;
+use App\Service\EntityManagerServices\RoomTypeManagerInterface;
 use App\Service\TableService;
 use App\Table\RoomTypeTableType;
 use Doctrine\ORM\PersistentCollection;

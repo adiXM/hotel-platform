@@ -3,11 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Room;
-use App\Entity\User;
 use App\Form\DeleteFormType;
 use App\Form\RoomEditType;
 use App\Form\RoomFormType;
-use App\Service\RoomManagerInterface;
+use App\Service\EntityManagerServices\RoomManagerInterface;
 use App\Service\TableService;
 use App\Table\RoomTableType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\EntityManagerServices;
 
 use App\Entity\Room;
 

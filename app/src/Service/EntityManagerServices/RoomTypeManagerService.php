@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\EntityManagerServices;
 
 use App\Entity\RoomType;
 use App\Repository\RoomTypeRepository;
+use App\Service\EntityManagerServices\RoomTypeManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -26,11 +27,16 @@ class RoomTypeManagerService implements RoomTypeManagerInterface
         $roomTypes = $this->repository->findAll();
 
         foreach ($roomTypes as $roomType) {
+            $amenityList = $roomType->getAmenities()->toArray();
+            $amenityValues = [];
+            foreach ($amenityList as $amenity) {
+                $amenityValues [] = $amenity->getName();
+            }
             $roomTypesCollection->add([
                 'id' => $roomType->getId(),
                 'name' => $roomType->getName(),
                 'description' => $roomType->getDescription(),
-                //'amenities' => $roomType->getAmenities()
+                'amenities' => $amenityValues
             ]);
         }
 
