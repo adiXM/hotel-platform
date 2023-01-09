@@ -3,9 +3,7 @@
 namespace App\Service\EntityManagerServices;
 
 use App\Entity\Amenity;
-use App\Entity\RoomType;
 use App\Repository\AmenityRepository;
-use App\Service\EntityManagerServices\AmenityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
