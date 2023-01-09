@@ -16,7 +16,22 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('admin_rooms') }}" {% if route_name == "admin_rooms" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>All Rooms</a></li>
-                        <li><a href="#" class="dropdown-item">Room Types</a></li>
+                        <li><a href="{{ path('admin_room_types') }}" {% if route_name == "admin_room_types" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Room Types</a></li>
+                        <li><a href="{{ path('admin_room_amenities') }}" {% if route_name == "admin_room_amenities" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Amenities</a></li>
+
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-2 link-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Booking
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('admin_rooms') }}" {% if route_name == "admin_rooms" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>All Bookings</a></li>
+                        <li><a href="{{ path('admin_room_amenities') }}" {% if route_name == "admin_room_amenities" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Amenities</a></li>
+
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
