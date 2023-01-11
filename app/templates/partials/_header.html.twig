@@ -1,0 +1,66 @@
+{% set route_name = app.request.attributes.get('_route') %}
+
+<header class="reveal_header fixed_header menu_v1">
+    <div class="layer"></div><!-- Opacity Mask -->
+    <div class="container">
+        <header>
+            <div class="px-3 py-2">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                        </a>
+
+                        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                            <li>
+                                <a href="#" class="nav-link animated_link text-secondary">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link animated_link text-white">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link animated_link text-white">
+                                    Orders
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link animated_link text-white">
+                                    Products
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link animated_link text-white">
+                                    Customers
+                                </a>
+                            </li>
+
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                <li class="dropdown">
+                                    <a class="btn_1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        My Account
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a href="{{ path('admin_rooms') }}" {% if route_name == "admin_rooms" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>{{ app.user.firstname }}</a></li>
+                                        <li><a href="{{ path('admin_room_types') }}" {% if route_name == "admin_room_types" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Room Types</a></li>
+                                        <li><a href="{{ path('admin_room_amenities') }}" {% if route_name == "admin_room_amenities" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Amenities</a></li>
+
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+                                </li>
+
+                            {% else %}
+                                <li><a class="btn_1" href="{{ path('app_login') }}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+    </div><!-- container -->
+</header>
