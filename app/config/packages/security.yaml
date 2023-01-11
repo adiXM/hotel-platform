@@ -9,11 +9,18 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+        app_customer_provider:
+            entity:
+                class: App\Entity\Customer
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         admin_backend:
+            pattern: ^/admin
             lazy: true
             provider: app_user_provider
 
@@ -31,6 +38,28 @@ security:
             logout:
                 path: admin_logout
                 target: admin_login
+
+        app_frontend:
+            pattern: ^/
+            lazy: true
+            provider: app_customer_provider
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: /
+                enable_csrf: true
+            logout:
+                path: app_logout
+                target: app_homepage
+
+
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
