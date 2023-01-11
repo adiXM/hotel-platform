@@ -6,14 +6,13 @@
 {% block content %}
     <div class="container">
 
-
-
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCustomer">New Customer</button>
 
         <div id="customers">Loading...</div>
 
+    </div>
 
-        <div class="modal fade" id="newCustomer" tabindex="-1" aria-labelledby="newCustomerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newCustomer" tabindex="-1" aria-labelledby="newCustomerModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -51,8 +50,7 @@
             </div>
         </div>
 
-
-    </div>
+    {% include '@Admin/partials/modals/_delete_modal.html.twig' %}
 
     <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
     <script>
