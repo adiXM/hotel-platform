@@ -15,9 +15,6 @@ class Room
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?float $price = null;
-
     #[ORM\Column(unique: true)]
     private ?int $room_number = null;
 
@@ -39,18 +36,6 @@ class Room
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
-
-        return $this;
     }
 
     public function getRoomNumber(): ?int

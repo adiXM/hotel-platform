@@ -67,7 +67,7 @@ class AmenityController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
-            $roomId = $deleteForm->get('roomId')->getData();
+            $roomId = $deleteForm->get('rowId')->getData();
 
             try {
                 $this->amenityManagerService->removeAmenity($roomId);

@@ -21,7 +21,6 @@ class RoomFormType extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('roomNumber', NumberType::class)
-            ->add('price', TextType::class)
             ->add('active', CheckboxType::class, [
                 'required' => false,
             ])

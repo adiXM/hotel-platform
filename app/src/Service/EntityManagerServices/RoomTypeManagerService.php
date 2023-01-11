@@ -35,6 +35,7 @@ class RoomTypeManagerService implements RoomTypeManagerInterface
             $roomTypesCollection->add([
                 'id' => $roomType->getId(),
                 'name' => $roomType->getName(),
+                'price' => $roomType->getPrice(),
                 'description' => $roomType->getDescription(),
                 'amenities' => $amenityValues
             ]);

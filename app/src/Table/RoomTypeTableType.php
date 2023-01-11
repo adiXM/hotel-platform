@@ -15,6 +15,7 @@ class RoomTypeTableType implements DataTableTypeInterface
         $dataTable->add('id', TextColumn::class, ['label' => 'Id', 'searchable' => true])
             ->add('name', TextColumn::class, ['label' => 'Type name'])
             ->add('description', TextColumn::class, ['label' => 'Description'])
+            ->add('price', TextColumn::class, ['label' => 'Price'])
             ->add('amenities', TwigStringColumn::class, [
                 'label' => 'Amenities',
                 'template' => '{% for amenity in row.amenities %}<span class="badge rounded-pill text-bg-dark ms-1">{{amenity}}</span></li>{% endfor %}',

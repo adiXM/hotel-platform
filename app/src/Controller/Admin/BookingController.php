@@ -3,11 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Booking;
+use App\Entity\Room;
 use App\Form\Booking\BookingFormType;
 use App\Form\DeleteFormType;
+use App\Form\RoomEditType;
 use App\Service\EntityManagerServices\BookingManagerInterface;
 use App\Service\TableService;
 use App\Table\BookingTableType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,6 +84,38 @@ class BookingController extends AbstractController
             'form' => $bookingForm->createView(),
             'deleteForm' => $deleteForm->createView(),
             'bookingsTable' => $table
+        ]);
+    }
+
+    #[Route('/admin/booking/{id}', name: 'admin_edit_booking')]
+    public function edit(Booking $booking, Request $request)
+    {
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $bookingEditForm = $this->createForm(BookingFormType::class, $booking);
+
+        $bookingEditForm->handleRequest($request);
+
+        if ($bookingEditForm->isSubmitted() && $bookingEditForm->isValid()) {
+
+            /** @var Booking $bookingData */
+            $bookingData = $bookingEditForm->getData();
+
+            try {
+                $this->bookingManagerService->updateBooking($bookingData);
+
+                $this->addFlash('notice', 'Your changes were saved!');
+
+            } catch (\Exception $ex) {
+                $this->addFlash('danger', $ex->getMessage());
+            }
+
+            return $this->redirectToRoute('admin_edit_booking', ['id' => $bookingData->getId()]);
+        }
+
+        return $this->render('admin/pages/booking/singlepage.html.twig', [
+            'form' => $bookingEditForm->createView(),
         ]);
     }
 }

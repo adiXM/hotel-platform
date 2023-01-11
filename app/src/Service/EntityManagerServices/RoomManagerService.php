@@ -29,7 +29,6 @@ class RoomManagerService implements RoomManagerInterface
         foreach ($rooms as $room) {
             $roomsCollection->add([
                 'id' => $room->getId(),
-                'price' => $room->getPrice(),
                 'room_number' => $room->getRoomNumber(),
                 'active' => $room->isActive(),
                 'room_type_name' => $room->getRoomType()->getName()
