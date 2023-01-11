@@ -2,11 +2,14 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Customer;
 use App\Entity\User;
+use App\Form\Customer\CustomerFormType;
+use App\Form\DeleteFormType;
 use App\Form\UserProfileType;
 use App\Service\EntityManagerServices\CustomerManagerService;
 use App\Service\TableService;
-use App\Table\UserTableType;
+use App\Table\CustomerTableType;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,40 +31,60 @@ class CustomerController extends AbstractController
         $hasAccess = $this->isGranted('ROLE_ADMIN');
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $table = $this->tableService->createTableType(UserTableType::class)
+        $table = $this->tableService->createTableType(CustomerTableType::class)
             ->createAdapter(ArrayAdapter::class, $this->customerManagerService->getCustomerList())
-            ->handleRequest($request);;
+            ->handleRequest($request);
 
         if ($table->isCallback()) {
             return $table->getResponse();
         }
 
-        $user = new User();
+        $customer = new Customer();
 
-        $userProfileForm = $this->createForm(UserProfileType::class, $user);
+        $customerForm = $this->createForm(CustomerFormType::class, $customer);
 
-        $userProfileForm->handleRequest($request);
+        $customerForm->handleRequest($request);
 
-        if ($userProfileForm->isSubmitted() && $userProfileForm->isValid()) {
+        if ($customerForm->isSubmitted() && $customerForm->isValid()) {
 
-            /** @var User $userData */
-            $userData = $userProfileForm->getData();
+            /** @var Customer $customerData */
+            $customerData = $customerForm->getData();
 
-            $plainPassword = $userProfileForm->get('plainPassword')->getData();
+            $plainPassword = $customerForm->get('plainPassword')->getData();
 
             if($plainPassword !== null) {
-                $userData->setPassword($this->customerManagerService->getHashPassword($userData, $plainPassword));
+                $customerData->setPassword($this->customerManagerService->getHashPassword($customerData, $plainPassword));
             }
 
-            $this->customerManagerService->updateUser($userData);
+            $this->customerManagerService->updateUser($customerData);
 
             $this->addFlash('notice', 'Your changes were saved!');
 
-            return $this->redirectToRoute('admin_users');
+            return $this->redirectToRoute('admin_customers');
+        }
+
+        $deleteForm = $this->createForm(DeleteFormType::class);
+        $deleteForm->handleRequest($request);
+
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+
+            $rowId = $deleteForm->get('rowId')->getData();
+
+            try {
+                $this->customerManagerService->removeCustomer($rowId);
+
+                $this->addFlash('success', 'Your changes were saved!');
+
+            } catch (\Exception $ex) {
+                $this->addFlash('danger', $ex->getMessage());
+            }
+
+            return $this->redirectToRoute('admin_room_amenities');
         }
 
         return $this->render('admin/pages/customers/index.html.twig', [
-            'form' => $userProfileForm->createView(),
+            'deleteForm' => $deleteForm->createView(),
+            'form' => $customerForm->createView(),
             'userTable' => $table
         ]);
     }

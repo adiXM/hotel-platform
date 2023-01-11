@@ -68,7 +68,7 @@ class RoomTypeController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
-            $roomId = $deleteForm->get('roomId')->getData();
+            $roomId = $deleteForm->get('rowId')->getData();
 
             try {
                 $this->roomTypeManagerService->removeRoomType($roomId);

@@ -4,11 +4,12 @@ namespace App\Service\EntityManagerServices;
 
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class CustomerManagerService
+class CustomerManagerService implements CustomerManagerInterface
 {
     private ObjectManager $entityManager;
 
@@ -23,17 +24,38 @@ class CustomerManagerService
 
     public function getCustomerList(): array
     {
-        return $this->repository->findAllWithFields('c', ['c.id', 'c.email', 'c.roles', 'c.firstname', 'c.lastname']);
+        $customerCollection  = new ArrayCollection();
+
+        $customers = $this->repository->findAll();
+        foreach ($customers as $customer) {
+            $customerCollection->add([
+                'id' => $customer->getId(),
+                'firstname' => $customer->getFirstName(),
+                'lastname' => $customer->getLastName(),
+                'email' => $customer->getEmail(),
+                'phone' => $customer->getPhone(),
+            ]);
+        }
+
+        return $customerCollection->toArray();
     }
 
-    public function updateUser(Customer $userData): void
+    public function updateUser(Customer $customerData): void
     {
-        $this->entityManager->persist($userData);
+        $this->entityManager->persist($customerData);
         $this->entityManager->flush();
     }
 
-    public function getHashPassword(Customer $user, string $plainPassword): string
+    public function removeCustomer(string $customerId): void
     {
-        return $this->passwordHasher->hashPassword($user, $plainPassword);
+        /** @var Customer $customer */
+        $customer = $this->repository->find($customerId);
+        $this->entityManager->remove($customer);
+        $this->entityManager->flush();
+    }
+
+    public function getHashPassword(Customer $customer, string $plainPassword): string
+    {
+        return $this->passwordHasher->hashPassword($customer, $plainPassword);
     }
 }
