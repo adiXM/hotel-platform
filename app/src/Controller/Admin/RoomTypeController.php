@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Media;
 use App\Entity\Room;
 use App\Entity\RoomType;
 use App\Form\DeleteFormType;
@@ -10,11 +11,13 @@ use App\Form\RoomFormType;
 use App\Form\RoomTypeEditType;
 use App\Form\RoomTypeFormType;
 use App\Service\EntityManagerServices\RoomTypeManagerInterface;
+use App\Service\MediaServiceInterface;
 use App\Service\TableService;
 use App\Table\RoomTypeTableType;
 use Doctrine\ORM\PersistentCollection;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +27,7 @@ class RoomTypeController extends AbstractController
     public function __construct(
         private readonly TableService $tableService,
         private readonly RoomTypeManagerInterface $roomTypeManagerService,
+        private readonly MediaServiceInterface $mediaService
     )
     {
     }
@@ -51,8 +55,18 @@ class RoomTypeController extends AbstractController
             /** @var RoomType $roomTypeFormData */
             $roomTypeFormData = $roomTypeForm->getData();
 
+            /** @var Media[] $mediaRoomTypeList */
+            $mediaRoomTypeList = $roomTypeForm->get('media')->getData();
+
             try {
-                $this->roomTypeManagerService->updateRoomType($roomTypeFormData);
+
+                $mediaNames = [];
+                /** @var UploadedFile $mediaFile */
+                foreach ($mediaRoomTypeList as $mediaFile) {
+                    $mediaNames[] = $this->mediaService->uploadMedia($mediaFile, $this->getParameter('media_directory'));
+                }
+
+                $this->roomTypeManagerService->updateRoomType($roomTypeFormData, $mediaNames);
 
                 $this->addFlash('success', 'Your changes were saved!');
 
@@ -95,19 +109,31 @@ class RoomTypeController extends AbstractController
         $hasAccess = $this->isGranted('ROLE_ADMIN');
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $roomTypeEditForm = $this->createForm(RoomTypeEditType::class, $room);
+        $roomTypeEditForm = $this->createForm(RoomTypeEditType::class, $room, [
+            'roomTypeId' => $room->getId(),
+            'public_media_directory' => $this->getParameter('public_media_directory'),
+            'media_directory' => $this->getParameter('media_directory')
+        ]);
+
 
         $roomTypeEditForm->handleRequest($request);
 
         if ($roomTypeEditForm->isSubmitted() && $roomTypeEditForm->isValid()) {
 
-
-            $nr = new RoomType();
             /** @var RoomType $roomTypeData */
             $roomTypeData = $roomTypeEditForm->getData();
 
+            /** @var Media[] $mediaRoomTypeList */
+            $mediaRoomTypeList = $roomTypeEditForm->get('media_select')->getData();;
+
+            $mediaNames = [];
+            /** @var UploadedFile $mediaFile */
+            foreach ($mediaRoomTypeList as $mediaFile) {
+                $mediaNames[] = $this->mediaService->uploadMedia($mediaFile, $this->getParameter('media_directory'));
+            }
+
             try {
-                $this->roomTypeManagerService->updateRoomType($roomTypeData);
+                $this->roomTypeManagerService->updateRoomType($roomTypeData, $mediaNames);
 
                 $this->addFlash('notice', 'Your changes were saved!');
 

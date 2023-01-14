@@ -30,11 +30,21 @@ class RoomType
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\Column]
+    private ?int $adults = null;
+
+    #[ORM\Column]
+    private ?int $childs = null;
+
+    #[ORM\ManyToMany(targetEntity: Media::class, inversedBy: 'roomTypes', cascade: ['persist'])]
+    private Collection $media;
+
 
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
         $this->amenities = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +142,70 @@ class RoomType
         if ($this->amenities->removeElement($amenity)) {
             $amenity->removeRoomType($this);
         }
+
+        return $this;
+    }
+
+    public function getAdults(): ?int
+    {
+        return $this->adults;
+    }
+
+    public function setAdults(int $adults): self
+    {
+        $this->adults = $adults;
+
+        return $this;
+    }
+
+    public function getChilds(): ?int
+    {
+        return $this->childs;
+    }
+
+    public function setChilds(int $childs): self
+    {
+        $this->childs = $childs;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->media->contains($media)) {
+            $this->media->add($media);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        $this->media->removeElement($media);
+
+        return $this;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media->add($medium);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        $this->media->removeElement($medium);
 
         return $this;
     }

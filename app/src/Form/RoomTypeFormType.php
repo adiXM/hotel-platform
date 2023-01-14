@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Amenity;
 use App\Entity\RoomType;
+use App\Form\FieldType\MediaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -36,6 +37,14 @@ class RoomTypeFormType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid PDF document',
                     ])
                 ],*/
+            ])
+            ->add('adults', NumberType::class,[
+                'mapped' => true,
+                'html5' => true
+            ])
+            ->add('childs', NumberType::class,[
+                'mapped' => true,
+                'html5' => true
             ])
             ->add('amenities', EntityType::class, [
                 'class' => Amenity::class,
