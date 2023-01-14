@@ -4,6 +4,8 @@ namespace App\Form\Booking;
 
 use App\Entity\Customer;
 use App\Entity\Room;
+use App\Repository\MediaRepository;
+use App\Repository\RoomRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -31,7 +33,7 @@ class BookingFormType extends AbstractType
                 'class' => Room::class,
                 'choice_label' => function (Room $room) {
                     return $room->getRoomType()->getName(). ' - '. $room->getRoomNumber();
-                }
+                },
             ])
             ->add('customer', EntityType::class, [
                 'class' => Customer::class,
@@ -40,11 +42,9 @@ class BookingFormType extends AbstractType
                 }
             ])
             ->add('adults', NumberType::class,[
-                'mapped' => false,
                 'html5' => true
             ])
-            ->add('children', NumberType::class,[
-                'mapped' => false,
+            ->add('childs', NumberType::class,[
                 'html5' => true
             ])
             ->add('checkin', DateType::class, [
@@ -57,7 +57,7 @@ class BookingFormType extends AbstractType
                 'required' => false
             ])
             ->add('price', MoneyType::class, [
-                'disabled' => true
+                //'disabled' => true
             ])
 
             ->add('save', SubmitType::class, [

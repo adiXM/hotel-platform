@@ -34,6 +34,12 @@ class Booking
     #[ORM\JoinColumn(nullable: false)]
     private ?Room $room = null;
 
+    #[ORM\Column]
+    private ?int $adults = null;
+
+    #[ORM\Column]
+    private ?int $childs = null;
+
 
     //TODO: pret, invoice
 
@@ -110,6 +116,30 @@ class Booking
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getAdults(): ?int
+    {
+        return $this->adults;
+    }
+
+    public function setAdults(int $adults): self
+    {
+        $this->adults = $adults;
+
+        return $this;
+    }
+
+    public function getChilds(): ?int
+    {
+        return $this->childs;
+    }
+
+    public function setChilds(int $childs): self
+    {
+        $this->childs = $childs;
 
         return $this;
     }

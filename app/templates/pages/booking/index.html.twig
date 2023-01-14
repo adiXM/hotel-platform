@@ -1,0 +1,131 @@
+{# templates/login/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block page_title %}
+    <div class="text-center"><h1>Signup page</h1></div>
+{% endblock %}
+
+{% block main %}
+
+
+
+    <style>
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+        }
+
+        .form-signin .form-floating:focus-within {
+            z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
+
+    {% block top_section %}
+        <div class="hero standard-height jarallax" data-jarallax="" data-speed="0.2">
+            <img class="jarallax-img" src="{{ asset('img/homepage.jpeg') }}" alt="">
+            <div class="wrapper opacity-mask d-flex align-items-center justify-content-center text-center animate_hero is-transitioned" data-opacity-mask="rgba(0, 0, 0, 0.5)" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="container">
+                    {% block top_section_text %}
+                        <small class="slide-animated one">Luxury Hotel Experience</small>
+                        <h1 class="slide-animated two">Booking page</h1>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="container margin_120_95">
+        <div class="rounded d-flex justify-content-center">
+            <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
+                <div class="container">
+                    <div class="row align-items-start">
+                        <div class="col-4">
+                            <img class="img-thumbnail" src="{{ main_image_path }}"/>
+                        </div>
+                        <div class="col-8">
+                            <h4>{{ roomType.name }}</h4>
+                            <p class="mb-0">{{ roomType.description }}</p>
+                            <div>
+                                <small>Checkin date: {{ checkin }}</small>
+                                <small>Checkout date: {{ checkout }}</small>
+                            </div>
+                            <div class="price">
+                                <h5>{{ roomType.price }} EUR</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded d-flex justify-content-center">
+            <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
+                <div class="container">
+
+
+                    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                    <div class="text-center">
+                        {% set room_id = app.request.attributes.get('id') %}
+                        <a data-bs-toggle="collapse" href="#collapseLogin" role="button" aria-expanded="false" aria-controls="collapseLogin">
+                            Login
+                        </a>
+                        <small>or</small>
+                        <a class="" data-bs-toggle="collapse" href="#collapseRegister" role="button" aria-expanded="false" aria-controls="collapseRegister">
+                            Register
+                        </a>
+                    </div>
+
+                    {% endif %}
+
+
+
+                    <div class="collapse" id="collapseLogin">
+                        <div class="card card-body">
+
+                        </div>
+                    </div>
+
+                    <div class="collapse {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} show{% endif %}" id="collapseRegister">
+                        <div class="card card-body">
+                            {{ form_start(registrationForm) }}
+                                {{ form_errors(registrationForm) }}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        {{ form_row(registrationForm.firstname) }}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        {{ form_row(registrationForm.lastname) }}
+                                    </div>
+                                </div>
+                                {{ form_row(registrationForm.email) }}
+
+                                {{ form_row(registrationForm.phone) }}
+
+                                {{ form_row(registrationForm.plainPassword) }}
+
+                                {{ form_row(registrationForm.save) }}
+
+                            {{ form_end(registrationForm) }}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

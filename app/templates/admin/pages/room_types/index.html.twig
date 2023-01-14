@@ -28,11 +28,22 @@
 
                         {{ form_row(form.description) }}
 
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(form.adults) }}
+                            </div>
+                            <div class="col">
+                                {{ form_row(form.childs) }}
+                            </div>
+                        </div>
+
+
                         {{ form_row(form.media) }}
+
+                        {{ form_row(form.amenities) }}
 
                         {{ form_row(form.price) }}
 
-                        {{ form_row(form.amenities) }}
 
                     </div>
                     <div class="modal-footer">
