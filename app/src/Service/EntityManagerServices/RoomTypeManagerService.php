@@ -2,9 +2,10 @@
 
 namespace App\Service\EntityManagerServices;
 
+use App\Entity\Media;
 use App\Entity\RoomType;
 use App\Repository\RoomTypeRepository;
-use App\Service\EntityManagerServices\RoomTypeManagerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -44,8 +45,20 @@ class RoomTypeManagerService implements RoomTypeManagerInterface
         return $roomTypesCollection->toArray();
     }
 
-    public function updateRoomType(RoomType $roomType): void
+    public function addMediaToRoomType(RoomType $roomType, array $mediaNames): void
     {
+        foreach ($mediaNames as $mediaFile) {
+            $media = new Media();
+            $media->setFileName($mediaFile);
+            $roomType->addMedia($media);
+            $media->setRoomType($roomType);
+        }
+    }
+
+    public function updateRoomType(RoomType $roomType, array $mediaNames): void
+    {
+        $this->addMediaToRoomType($roomType, $mediaNames);
+
         $this->entityManager->persist($roomType);
         $this->entityManager->flush();
     }
