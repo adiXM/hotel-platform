@@ -15,4 +15,6 @@ interface RoomTypeManagerInterface
 
     public function addMediaToRoomType(RoomType $roomType, array $mediaRoomTypeList): void;
 
+    public function getRoomType(string $roomTypeId): RoomType;
+
 }

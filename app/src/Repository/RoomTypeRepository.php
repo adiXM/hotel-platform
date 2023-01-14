@@ -39,6 +39,22 @@ class RoomTypeRepository extends ServiceEntityRepository
         }
     }
 
+    public function findValidRoomTypes(int $adults, int $childs): array
+    {
+        return $this->createQueryBuilder('rt')
+            ->innerJoin('rt.rooms', 'r')
+            ->addSelect('r')
+            ->andWhere('rt.adults >= :adults')
+            ->andWhere('rt.childs >= :childs')
+            ->andWhere('r.active = :active')
+            ->setParameter('active', 1)
+            ->setParameter('adults', $adults)
+            ->setParameter('childs', $childs)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return RoomType[] Returns an array of RoomType objects
 //     */

@@ -74,7 +74,7 @@ class Room
         return $this;
     }
 
-    public function getBookings(): ?Booking
+    public function getBookings(): Collection
     {
         return $this->bookings;
     }

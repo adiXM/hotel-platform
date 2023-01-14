@@ -45,6 +45,11 @@ class RoomTypeManagerService implements RoomTypeManagerInterface
         return $roomTypesCollection->toArray();
     }
 
+    public function getRoomType(string $roomTypeId): RoomType
+    {
+        return $this->repository->find($roomTypeId);
+    }
+
     public function addMediaToRoomType(RoomType $roomType, array $mediaNames): void
     {
         foreach ($mediaNames as $mediaFile) {
