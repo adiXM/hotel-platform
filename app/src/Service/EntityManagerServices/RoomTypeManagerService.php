@@ -33,12 +33,18 @@ class RoomTypeManagerService implements RoomTypeManagerInterface
             foreach ($amenityList as $amenity) {
                 $amenityValues [] = $amenity->getName();
             }
+
+            $media = $roomType->getMedia()->getValues();
+            /** @var Media $mainImage */
+            $mainImage = $media[array_rand($media)];
+
             $roomTypesCollection->add([
                 'id' => $roomType->getId(),
                 'name' => $roomType->getName(),
                 'price' => $roomType->getPrice(),
                 'description' => $roomType->getDescription(),
-                'amenities' => $amenityValues
+                'amenities' => $amenityValues,
+                'main_image' => $mainImage->getFileName()
             ]);
         }
 

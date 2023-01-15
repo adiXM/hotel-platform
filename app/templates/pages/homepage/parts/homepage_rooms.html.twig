@@ -12,7 +12,7 @@
         <div class="{% if loop.index0 == 0 %}col-xl-6 col-lg-12 col-md-12 col-sm-12{% else %}col-xl-3 col-lg-6 col-md-6 col-sm-6{% endif %}" data-cue="slideInUp" data-delay="300">
             <a href="{{ path('app_room_details', {id: roomType.id}) }}" class="box_cat_rooms">
                 <figure>
-                    <div class="background-image" data-background="url(img/rooms/1.jpg)" style="background-image: url(&quot;img/rooms/1.jpg&quot;);"></div>
+                    <div class="background-image" data-background="url({{ roomType.main_image }})" style="background-image: url({{ roomType.main_image }});"></div>
                     <div class="info">
                         <small>From {{ roomType.price }}/night</small>
                         <h3>{{ roomType.name }}</h3>
