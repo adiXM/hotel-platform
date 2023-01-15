@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Entity\Media;
+use App\Form\Booking\BookingCustomerFormType;
 use App\Form\Frontend\Clientarea\ProfileFormType;
 use App\Form\Frontend\RegistrationFormType;
 use App\Service\EntityManagerServices\CustomerManagerInterface;
@@ -48,33 +49,20 @@ class BookingController  extends AbstractController
             throw new \Exception('You cannot book this room');
         }
 
+        $session->set('booking', [
+            'checkin' => $checkin,
+            'checkout' => $checkout,
+            'roomTypeId' => $id
+        ]);
+
         $customer = $this->getUser();
         if($customer === null) {
             $customer = new Customer();
         }
 
-        $registerForm = $this->createForm(RegistrationFormType::class, $customer);
-        $registerForm->handleRequest($request);
+        $bookingCustomerData = $this->createForm(BookingCustomerFormType::class, $customer);
 
         $roomType = $this->roomTypeManager->getRoomType($id);
-
-        if ($registerForm->isSubmitted() && $registerForm->isValid()) {
-            /** @var Customer $customerData */
-            $customerData = $registerForm->getData();
-
-            $plainPassword = $registerForm->get('plainPassword')->getData();
-
-            if($plainPassword !== null) {
-                $customerData->setPassword($this->customerManagerService->getHashPassword($customerData, $plainPassword));
-            }
-
-            $this->customerManagerService->updateUser($customerData);
-
-            $this->addFlash('notice', 'Your changes were saved!');
-
-            return $this->redirectToRoute('app_book_room',['id' => $id]);
-        }
-
 
 
         $media = $roomType->getMedia()->getValues();
@@ -82,7 +70,7 @@ class BookingController  extends AbstractController
         $mainImage = $media[array_rand($media)];
 
         return $this->render('pages/booking/index.html.twig', [
-            'registrationForm' => $registerForm->createView(),
+            'bookingCustomerData' => $bookingCustomerData->createView(),
             'roomType' => $roomType,
             'main_image_path' => $this->getParameter('public_media_directory').'/'.$mainImage->getFileName(),
             'checkin' => $checkin,

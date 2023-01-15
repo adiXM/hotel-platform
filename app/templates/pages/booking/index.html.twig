@@ -73,53 +73,40 @@
             <div class="col-md-6 col-sm-12 shadow-lg p-5 bg-light">
                 <div class="container">
 
-
                     {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
                     <div class="text-center">
                         {% set room_id = app.request.attributes.get('id') %}
-                        <a data-bs-toggle="collapse" href="#collapseLogin" role="button" aria-expanded="false" aria-controls="collapseLogin">
+                        <a class="btn_1" href="{{ path('app_login') }}">
                             Login
                         </a>
                         <small>or</small>
-                        <a class="" data-bs-toggle="collapse" href="#collapseRegister" role="button" aria-expanded="false" aria-controls="collapseRegister">
+                        <a class="btn_4" href="{{ path('app_register', {}) }}">
                             Register
                         </a>
                     </div>
 
                     {% endif %}
 
-
-
-                    <div class="collapse" id="collapseLogin">
-                        <div class="card card-body">
-
-                        </div>
-                    </div>
-
-                    <div class="collapse {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} show{% endif %}" id="collapseRegister">
-                        <div class="card card-body">
-                            {{ form_start(registrationForm) }}
-                                {{ form_errors(registrationForm) }}
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <div>
+                            {{ form_start(bookingCustomerData) }}
+                                {{ form_errors(bookingCustomerData) }}
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        {{ form_row(registrationForm.firstname) }}
+                                        {{ form_row(bookingCustomerData.firstname) }}
                                     </div>
                                     <div class="col-sm-6">
-                                        {{ form_row(registrationForm.lastname) }}
+                                        {{ form_row(bookingCustomerData.lastname) }}
                                     </div>
                                 </div>
-                                {{ form_row(registrationForm.email) }}
+                                {{ form_row(bookingCustomerData.email) }}
 
-                                {{ form_row(registrationForm.phone) }}
+                                {{ form_row(bookingCustomerData.phone) }}
 
-                                {{ form_row(registrationForm.plainPassword) }}
-
-                                {{ form_row(registrationForm.save) }}
-
-                            {{ form_end(registrationForm) }}
+                            {{ form_end(bookingCustomerData) }}
                         </div>
-                    </div>
+                    {% endif %}
 
 
                 </div>
