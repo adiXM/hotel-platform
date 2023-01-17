@@ -42,6 +42,7 @@ security:
             logout:
                 path: admin_logout
                 target: admin_login
+                invalidate_session: false
 
         app_frontend:
             pattern: ^/
@@ -66,6 +67,7 @@ security:
             logout:
                 path: app_logout
                 target: app_homepage
+                invalidate_session: false
 
 
 
