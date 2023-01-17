@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Amenity;
 use App\Entity\Booking;
+use App\Entity\Room;
 use App\Entity\RoomType;
 use App\Repository\BookingRepository;
 use App\Repository\RoomTypeRepository;
@@ -22,14 +23,13 @@ class SearchService implements SearchServiceInterface
     /**
      * @throws \Exception
      */
-    public function searchRoomTypes(array $parameters, array $selectedAmenities): array
+    public function searchRoomTypes(array $bookingData, array $selectedAmenities): array
     {
-        $dates = $this->helperService->getDates($parameters['dates']);
-        $adults = $parameters['adults'];
-        $childs = $parameters['childs'];
 
-        $checkin = $this->helperService->transformDates('m-d-y', $dates['checkin'], 'd-m-Y');
-        $checkout = $this->helperService->transformDates('m-d-y', $dates['checkout'], 'd-m-Y');
+        $adults = $bookingData['adults'];
+        $childs = $bookingData['childs'];
+        $checkin = $this->helperService->transformDates('d-m-Y', $bookingData['checkin'], 'Y-m-d');
+        $checkout = $this->helperService->transformDates('d-m-Y', $bookingData['checkout'], 'Y-m-d');
 
         $resRoom = $this->roomTypeRepository->findValidRoomTypes($adults, $childs);
 
@@ -43,8 +43,11 @@ class SearchService implements SearchServiceInterface
         return $validRoomTypes;
     }
 
-    public function checkRoomType(RoomType $roomType, string $checkin, string $checkout, array $selectedAmenities = []): bool
+    public function checkRoomType(RoomType $roomType, string $checkin, string $checkout, array $selectedAmenities = [], Room &$roomEntity = null): bool
     {
+        $checkin = $this->helperService->transformDates('d-m-Y', $checkin, 'Y-m-d');
+        $checkout = $this->helperService->transformDates('d-m-Y', $checkout, 'Y-m-d');
+
         $keepRoomType = false;
         $rooms = $roomType->getRooms();
         foreach ($rooms as $room){
@@ -53,6 +56,7 @@ class SearchService implements SearchServiceInterface
                 $this->isFreeRoom($checkin, $checkout, $bookedRooms) &&
                 $this->hasAllAmenities($roomType->getAmenities()->toArray(), $selectedAmenities)
             ) {
+                $roomEntity = $room;
                 $keepRoomType = true;
                 break;
             }
@@ -64,7 +68,6 @@ class SearchService implements SearchServiceInterface
     private function hasAllAmenities(array $roomAmenities, array $selectedAmenities): bool
     {
 
-        //dd($roomAmenities,$selectedAmenities);
         if(\count($selectedAmenities) === 0) {
             return true;
         }
@@ -92,17 +95,17 @@ class SearchService implements SearchServiceInterface
         if(\count($bookedRooms) === 0) {
             return true;
         }
-        $keepRoom = false;
+        $keepRoom = true;
+
         /** @var Booking $bookedRoom */
         foreach ($bookedRooms as $bookedRoom) {
 
-            $bookCheckin = $bookedRoom->getCheckin()->format('d-m-Y');
-            $bookCheckout = $bookedRoom->getCheckout()->format('d-m-Y');
+            $bookCheckin = $bookedRoom->getCheckin()->format('Y-m-d');
+            $bookCheckout = $bookedRoom->getCheckout()->format('Y-m-d');
 
             $overlap = false;
 
-
-            if($checkin >= $bookCheckin && $checkin < $bookCheckout && $checkout > $bookCheckout) {
+            if($checkin >= $bookCheckin && $checkin < $bookCheckout && $checkout >= $bookCheckout) {
                 $overlap = true;
             }
 
@@ -123,8 +126,8 @@ class SearchService implements SearchServiceInterface
                 $overlap = true;
             }
 
-            if($overlap === false) {
-                $keepRoom = true;
+            if($overlap === true) {
+                $keepRoom = false;
                 break;
             }
         }

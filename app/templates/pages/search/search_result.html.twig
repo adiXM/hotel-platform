@@ -61,6 +61,8 @@
                     <div class="row {% if loop.index0%2==0 %}justify-content-start{% else %}justify-content-end{% endif %}">
                         <div class="col-lg-8">
                             <div class="box_item_info" data-jarallax-element="-30" style="transform: translate3d(0px, -0.226172px, 0px);">
+                                {{ form_start(room.form_view) }}
+
                                 <small>From {{ room.price }} EUR/night</small>
                                 <h2>{{ room.name }}</h2>
                                 <p>{{ room.description }}</p>
@@ -78,13 +80,21 @@
                                     </ul>
                                 </div>
                                 <div class="box_item_footer d-flex align-items-center justify-content-between">
+
+                                    {{ form_row(room.form_view.book_button) }}
+
                                     <a href="{{ path('app_book_room', {id:room.id}) }}" class="btn_4 learn-more">
                                     <span class="circle">
                                         <span class="icon arrow"></span>
                                     </span>
+
                                         <span class="button-text">Book Now</span>
                                     </a>
                                 </div>
+                                {{ form_widget(room.form_view.roomTypeId, {'value': room.id}) }}
+
+
+                                {{ form_end(room.form_view) }}
 
                             </div>
                             <!-- /col -->

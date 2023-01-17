@@ -12,7 +12,7 @@
                     <div class="qty-buttons">
                         <label>Adults</label>
                         <input type="button" value="+" class="qtyplus" name="adults">
-                        {{ form_widget(search_form.adults) }}
+                        {{ form_widget(search_form.adults, {'value': 0})}}
                         <input type="button" value="-" class="qtyminus" name="adults">
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <div class="qty-buttons">
                         <label>Childs</label>
                         <input type="button" value="+" class="qtyplus" name="childs">
-                        {{ form_widget(search_form.childs) }}
+                        {{ form_widget(search_form.childs, {'value': 0}) }}
                         <input type="button" value="-" class="qtyminus" name="childs">
                     </div>
                 </div>
