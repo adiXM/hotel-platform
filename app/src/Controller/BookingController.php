@@ -8,7 +8,6 @@ use App\Form\Booking\BookingCustomerFormType;
 use App\Form\Frontend\Booking\BookingFormType;
 use App\Form\Frontend\Search\RoomTypeSearchType;
 use App\Service\BookingHandlerServiceInterface;
-use App\Service\EntityManagerServices\CustomerManagerInterface;
 use App\Service\EntityManagerServices\RoomTypeManagerInterface;
 use App\Service\Frontend\DataManagerInterface;
 use App\Service\HelperService;
@@ -23,7 +22,6 @@ class BookingController  extends AbstractController
 {
     public function __construct(
         private readonly DataManagerInterface $dataManager,
-        private readonly CustomerManagerInterface $customerManagerService,
         private readonly SearchServiceInterface $searchService,
         private readonly RoomTypeManagerInterface $roomTypeManager,
         private readonly HelperService $helperService,
@@ -32,13 +30,12 @@ class BookingController  extends AbstractController
     {
     }
 
-
     #[Route('/book', name: 'app_book_room')]
     public function index(Request $request, SessionInterface $session): Response
     {
         $bookingData = $this->dataManager->getCurrentBookingData($session);
 
-        if($session->get('booking') === null) {
+        if($bookingData === null) {
             return $this->redirectToRoute('app_homepage');
         }
 
@@ -56,7 +53,7 @@ class BookingController  extends AbstractController
             try {
                 $this->bookingHandlerService->handle($booking, $customer);
                 $this->dataManager->clearBookingData($session);
-
+                return $this->redirectToRoute('app_confirm_booking');
             } catch (\Exception $ex) {
                 $this->addFlash('frontend_error', 'Someting went wrong with the booking. Please contact us!'. $ex->getMessage());
                 return $this->redirectToRoute('app_homepage');
