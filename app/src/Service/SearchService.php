@@ -28,8 +28,8 @@ class SearchService implements SearchServiceInterface
 
         $adults = $bookingData['adults'];
         $childs = $bookingData['childs'];
-        $checkin = $this->helperService->transformDates('d-m-Y', $bookingData['checkin'], 'Y-m-d');
-        $checkout = $this->helperService->transformDates('d-m-Y', $bookingData['checkout'], 'Y-m-d');
+        $checkin = $bookingData['checkin'];
+        $checkout = $bookingData['checkout'];
 
         $resRoom = $this->roomTypeRepository->findValidRoomTypes($adults, $childs);
 

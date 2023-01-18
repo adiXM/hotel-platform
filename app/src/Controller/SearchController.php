@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Amenity;
+use App\Entity\Media;
 use App\Entity\Room;
 use App\Entity\RoomType;
 use App\Form\Customer\CustomerFormType;
@@ -33,7 +34,11 @@ class SearchController extends AbstractController
 
         $queryAmenities = $request->query->get('amenities');
 
-        $bookingData = $session->get('booking');
+        $bookingData = $this->dataManager->getCurrentBookingData($session);
+
+        if($bookingData === null) {
+            return $this->redirectToRoute('app_homepage');
+        }
 
         $amenitiesForm = $this->createForm(AmenityFormType::class,
             $this->dataManager->getAllAmenities($queryAmenities)
@@ -57,6 +62,7 @@ class SearchController extends AbstractController
         }
 
         $result = $this->searchService->searchRoomTypes($bookingData, $selectedAmenities->toArray());
+
         $roomTypes = [];
         /** @var RoomType $roomType */
         foreach($result as $roomType) {
@@ -64,6 +70,19 @@ class SearchController extends AbstractController
                     'action' => $this->generateUrl('app_book_room')
                 ]
             );
+
+            $media = $roomType->getMedia()->getValues();
+            /** @var Media $mainImage */
+            $mainImage = $media[array_rand($media)];
+
+            $amenities = $roomType->getAmenities();
+            $amenitiesList = [];
+            foreach ($amenities as $amenity) {
+                $amenitiesList[] = [
+                    'name' => $amenity->getName(),
+                    'icon' => $amenity->getIconClass()
+                ];
+            }
             $roomTypes[] = [
                 'id' => $roomType->getId(),
                 'name' => $roomType->getName(),
@@ -71,6 +90,8 @@ class SearchController extends AbstractController
                 'description' => $roomType->getDescription(),
                 'adults' => $roomType->getAdults(),
                 'childs' => $roomType->getChilds(),
+                'main_image' => $this->getParameter('public_media_directory').'/'.$mainImage->getFileName(),
+                'amenities' => $amenitiesList,
                 'form' => $form,
                 'form_view' => $form->createView()
             ];

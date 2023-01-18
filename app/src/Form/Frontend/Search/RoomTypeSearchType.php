@@ -16,7 +16,7 @@ class RoomTypeSearchType  extends AbstractType
             ->add('roomTypeId', HiddenType::class)
             ->add('book_button', SubmitType::class, [
                 'label' => 'Book',
-                'attr' => ['class' => 'btn_4 learn-more']
+                'attr' => ['class' => 'btn_1 text-white'],
             ])
         ;
 
