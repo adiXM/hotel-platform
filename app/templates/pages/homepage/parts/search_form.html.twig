@@ -1,0 +1,33 @@
+{{ form_start(search_form) }}
+    <div class="row justify-content-center slide-animated three">
+        <div class="col-xl-10">
+            <div class="row g-0 booking_form">
+                <div class="col-lg-4 ">
+                    <div class="form-group">
+                        {{ form_widget(search_form.dates) }}
+                        <i class="bi bi-calendar2"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 pe-lg-0 pe-sm-1">
+                    <div class="qty-buttons">
+                        <label>Adults</label>
+                        <input type="button" value="+" class="qtyplus" name="adults">
+                        {{ form_widget(search_form.adults, {'value': 0})}}
+                        <input type="button" value="-" class="qtyminus" name="adults">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 ps-lg-0 ps-sm-1">
+                    <div class="qty-buttons">
+                        <label>Childs</label>
+                        <input type="button" value="+" class="qtyplus" name="childs">
+                        {{ form_widget(search_form.childs, {'value': 0}) }}
+                        <input type="button" value="-" class="qtyminus" name="childs">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    {{ form_widget(search_form.search_button) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{{ form_end(search_form) }}

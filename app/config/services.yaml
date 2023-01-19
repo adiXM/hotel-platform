@@ -4,7 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    media_directory: '%kernel.project_dir%/public/uploads/media'
+    public_media_directory: '/uploads/media'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -13,6 +14,9 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
+    Twig\Extension\StringLoaderExtension:
+        tags: [ twig.extension ]
+
     App\:
         resource: '../src/'
         exclude:

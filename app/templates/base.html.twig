@@ -13,7 +13,193 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="datepicker_mobile_full">
+
+            {% include 'partials/_header.html.twig' %}
+
+            {% block main %}
+                {% block top_section %}
+                    <div class="hero small-height jarallax" data-jarallax="" data-speed="0.2">
+                        <div class="wrapper opacity-mask d-flex align-items-center justify-content-center text-center animate_hero is-transitioned"
+                             data-opacity-mask="rgba(0, 0, 0, 0.5)" style="background-color: rgba(0, 0, 0, 0.5);">
+                            <div class="container">
+                                {% block top_section_text %}
+                                <small class="slide-animated one">Luxury Hotel Experience</small>
+                                <h1 class="slide-animated two">Please sign in</h1>
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% endblock %}
+
+            {% block custom_js %}
+             {#{{ encore_entry_script_tags('custom_js') }}#}
+
+            {% endblock %}
+
+
+
+            <script>
+
+                !function (jQ) {
+                    "use strict";
+
+                    jQ(window).on("load", function () {
+                        jQ('[data-loader="circle-side"]').fadeOut(), jQ("#preloader").addClass("loaded"), jQ(".animate_hero").addClass("is-transitioned")
+                    });
+
+
+                    /*const header = $('header.header_revealed');
+                    const headroom = new Headroom(header, {
+                        offset: 50,
+                        tolerance: 5,
+                        classes: {initial: "animated", pinned: "slideDown", unpinned: "slideUp"}
+                    });
+                    headroom.init();*/
+
+                    jQ(window).on("scroll", function () {
+                        1 < jQ(this).scrollTop() ? jQ(".fixed_header").addClass("sticky") : jQ(".fixed_header").removeClass("sticky")
+                    });
+
+                    /*jQ(window).scroll(), scrollCue.init({percentage: .85}), jQ(".opacity-mask").each(function () {
+                        jQ(this).css("background-color", jQ(this).attr("data-opacity-mask"))
+                    }), jQ(".background-image").each(function () {
+                        jQ(this).css("background-image", jQ(this).attr("data-background"))
+                    }), jQ('a[href^="#"].btn_scrollto').on("click", function (e) {
+                        e.preventDefault();
+                        var t = this.hash, e = jQ(t);
+                        jQ("html, body").stop().animate({scrollTop: e.offset().top - 60}, 300, "swing", function () {
+                            window.location.hash = t
+                        })
+                    });*/
+
+                    /*const e = document.querySelectorAll(".pinned-image");
+                    e.forEach(e => {
+                        const t = e.querySelector(".pinned-image__container");
+                        t.querySelector("img");
+                        var a = t.querySelector(".pinned-image__container-overlay"), o = e.querySelector(".pinned_over_content");
+                        const s = gsap.timeline({paused: !0});
+                        s.to(t, {scale: 1.05}, 0), s.from(o, {autoAlpha: 0}, 0), s.from(a, {autoAlpha: 0}, 0);
+                        ScrollTrigger.create({animation: s, trigger: e, start: "top center", markers: !1, pin: !1, scrub: !1})
+                    });
+
+                    var t, a, o, i, n = s(window), r = jQ("#section_video video");
+                    r.length && (r.each(function () {
+                        jQ(this).attr("webkit-playsinline", ""), jQ(this).attr("playsinline", ""), jQ(this).attr("muted", "muted"), jQ(this).attr("id", "loadvideo"), document.getElementById("loadvideo").load()
+                    }), n.scroll(function () {
+                        r.each(function () {
+                            var e;
+                            1 == (t = jQ(e = this).offset().top, a = t + jQ(e).outerHeight(), o = n.scrollTop(), i = o + n.height(), o < a && t < i) ? jQ(this)[0].play() : jQ(this)[0].pause()
+                        })
+                    })), jQ(".open_close_nav_panel").on("click", function () {
+                        jQ(".nav_panel").toggleClass("show"), jQ(".layer").toggleClass("layer-is-visible")
+                    }), jQ(".sidebar-navigation nav li a").on("click", function () {
+                        var e = jQ(this).parents("ul").length - 1, t = jQ(this).closest("ul"), a = jQ(this).parent("li"),
+                            o = jQ(".level-" + e), e = jQ(this).next("ul");
+                        a.hasClass("back") ? (t.removeClass("active"), o.removeClass("hidden")) : 0 < a.children("ul").length && (e.toggleClass("active"), t.addClass("hidden"))
+                    }), jQ(".open_close_menu").on("click", function () {
+                        jQ(".main-menu").toggleClass("show"), jQ(".layer").toggleClass("layer-is-visible")
+                    }), jQ(".menu_open").on("click", function () {
+                        jQ(".hamburger").toggleClass("is-active"), jQ(".panel_menu").toggleClass("active"), jQ("body").toggleClass("no_scroll"), jQ("header").toggleClass("header_color")
+                    }), jQ(".wrapper_menu ul li a").each(function () {
+                        jQ(this).on("mouseover", function () {
+                            jQ(".wrapper_menu").addClass("hover"), jQ(".container-item").removeClass("active"), jQ(this).parent().addClass("active")
+                        }).on("mouseleave", function () {
+                            jQ(".wrapper_menu").removeClass("hover")
+                        })
+                    });*/
+                    var l = jQ('#search_form_dates');
+                    jQ(function () {
+                        debugger;
+                        l.daterangepicker({
+                            autoUpdateInput: !1,
+                            autoApply: !0,
+                            minDate: new Date,
+                            locale: {cancelLabel: "Clear"}
+                        }), l.on("apply.daterangepicker", function (e, t) {
+                            jQ(this).val(t.startDate.format("MM-DD-YY") + "  >  " + t.endDate.format("MM-DD-YY"))
+                        }), l.on("cancel.daterangepicker", function (e, t) {
+                            jQ(this).val("")
+                        })
+                    }),
+                        /*jQ(".carousel_item_1").owlCarousel({
+                        center: !0,
+                        items: 1,
+                        loop: !1,
+                        addClassActive: !0,
+                        margin: 0,
+                        autoplay: !1,
+                        autoplayTimeout: 3e3,
+                        autoplayHoverPause: !0,
+                        animateOut: "fadeOut",
+                        responsive: {0: {dots: !0}, 991: {dots: !0}}
+                    }), jQ(".carousel_item_centered").owlCarousel({
+                        loop: !0,
+                        margin: 5,
+                        nav: !0,
+                        dots: !1,
+                        center: !0,
+                        navText: ["<i class='bi bi-arrow-left-short'></i>", "<i class='bi bi-arrow-right-short'></i>"],
+                        responsive: {0: {items: 1}, 600: {items: 2}, 1e3: {items: 2}}
+                    }), s(".carousel_item_centered_rooms").owlCarousel({
+                        loop: !0,
+                        margin: 5,
+                        nav: !0,
+                        dots: !1,
+                        center: !0,
+                        navText: ["<i class='bi bi-arrow-left-short'></i>", "<i class='bi bi-arrow-right-short'></i>"],
+                        responsive: {0: {items: 1}, 600: {items: 1}, 991: {items: 2}}
+                    }), s(".carousel_item_3").owlCarousel({
+                        loop: !1,
+                        margin: 15,
+                        nav: !0,
+                        dots: !1,
+                        center: !1,
+                        navText: ["<i class='bi bi-arrow-left-short'></i>", "<i class='bi bi-arrow-right-short'></i>"],
+                        responsive: {0: {items: 1}, 600: {items: 2}, 1e3: {items: 3}}
+                    }), s(".carousel_testimonials").owlCarousel({
+                        items: 1,
+                        loop: !0,
+                        autoplay: !1,
+                        animateIn: "flipInX",
+                        margin: 40,
+                        stagePadding: 30,
+                        smartSpeed: 300,
+                        autoHeight: !0,
+                        dots: !0,
+                        responsiveClass: !0,
+                        responsive: {600: {items: 1}, 1e3: {items: 1, nav: !1}}
+                    }), s(".fixed_title").theiaStickySidebar({
+                        minWidth: 991,
+                        additionalMarginTop: 120
+                    }), s(".custom_select select").niceSelect(), 1024 <= s(window).width() && s("footer.revealed").footerReveal({
+                        shadow: !1,
+                        opacity: .6,
+                        zIndex: 1
+                    }), */
+
+                        jQ(".footer_links > ul > li").hover(function () {
+                            jQ(this).siblings().stop().fadeTo(300, .6), jQ(this).parent().siblings().stop().fadeTo(300, .3)
+                    }, function () {
+                            jQ(this).siblings().stop().fadeTo(300, 1), jQ(this).parent().siblings().stop().fadeTo(300, 1)
+                    });
+                    var c = document.querySelector(".progress-wrap path"), d = c.getTotalLength();
+
+                    function u() {
+                        var e = jQ(window).scrollTop(), t = jQ(document).height() - jQ(window).height(), t = d - e * d / t;
+                        c.style.strokeDashoffset = t
+                    }
+
+                    c.style.transition = c.style.WebkitTransition = "none", c.style.strokeDasharray = d + " " + d, c.style.strokeDashoffset = d, c.getBoundingClientRect(), c.style.transition = c.style.WebkitTransition = "stroke-dashoffset 10ms linear", u(), jQ(window).scroll(u), jQ(window).on("scroll", function () {
+                        50 < jQuery(this).scrollTop() ? jQuery(".progress-wrap").addClass("active-progress") : jQuery(".progress-wrap").removeClass("active-progress")
+                    }), jQ(".progress-wrap").on("click", function (e) {
+                        return e.preventDefault(), jQuery("html, body").animate({scrollTop: 0}, 550), !1
+                    })
+                }(jQuery);
+            </script>
+
+
+
     </body>
 </html>

@@ -14,7 +14,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./mysql:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     networks:
       - symfony-network
 
@@ -49,5 +49,25 @@ services:
     depends_on:
       - php
 
+  encore:
+    container_name: '${CONTAINER_PREFIX_NAME}-encore'
+    image: node:latest
+    volumes:
+      - ../app:/var/www/symfony
+    working_dir: /var/www/symfony
+    # for webpack-encore v1, "--disable-host-check" is replaced with "--firewall false"
+    command: >
+      sh -c "yarn install &&
+             yarn encore dev-server --hot --port 9999 --host 0.0.0.0"
+    ports:
+      - "9999:9999"
+    networks:
+      - symfony-network
+
 networks:
   symfony-network:
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local

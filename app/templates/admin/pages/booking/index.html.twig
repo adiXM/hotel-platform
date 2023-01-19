@@ -1,0 +1,87 @@
+{# templates/login/index.html.twig #}
+{% extends '@Admin/adminbase.html.twig' %}
+{% block page_title %}
+    <div class="text-center"><h1>Bookings</h1></div>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingTypeModal">New booking</button>
+
+        <div id="bookings">Loading...</div>
+
+
+        <div class="modal fade" id="bookingTypeModal" tabindex="-1" aria-labelledby="bookingTypeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="bookingTypeModalLabel">Create new booking</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {{ form_start(form) }}
+
+                    {{ form_errors(form) }}
+
+                    <div class="modal-body">
+
+                        {{ form_row(form.customer) }}
+
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(form.adults) }}
+                            </div>
+                            <div class="col">
+                                {{ form_row(form.childs) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.room) }}
+
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(form.checkin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_row(form.checkout) }}
+                            </div>
+                        </div>
+
+
+                        {{ form_row(form.note) }}
+
+                        {{ form_row(form.price) }}
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{ form_row(form.save) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '@Admin/partials/modals/_delete_modal.html.twig' %}
+
+
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+
+    <script>
+        $(function() {
+
+            $('#bookings').initDataTables({{ datatable_settings(bookingsTable) }}, {
+                searching: true,
+                lengthChange: false
+            }).then(function (dt) {
+                // dt contains the initialized instance of DataTables
+                dt.on('draw', function () {
+
+                })
+            });
+        });
+    </script>
+
+{% endblock %}

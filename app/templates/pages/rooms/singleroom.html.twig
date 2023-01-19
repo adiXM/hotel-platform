@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    {{ parent() }}
+    {% block top_section_text %}
+        <small class="slide-animated one">test 123</small>
+        <h1 class="slide-animated two">Room details</h1>
+    {% endblock %}
+
+
+    <div class="bg_white" id="first_section">
+        <div class="container margin_120_95">
+            <div class="row justify-content-between">
+                <div class="col-lg-4">
+                    <div class="title">
+                        <small>{{ room.name }}</small>
+                        <h2>A deeply space that invites you to truly Switch Off.</h2>
+                    </div>
+
+                    <p>{{ room.description }}</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="room_facilities_list">
+                        <ul data-cues="slideInLeft" data-disabled="true">
+                            {% for amenity in room.amenities %}
+                                <li data-cue="slideInLeft" data-show="true" style="animation-name: slideInLeft; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 180ms; animation-direction: normal; animation-fill-mode: both;"><i class="{{ amenity.icon_class }}"></i> {{ amenity.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+
+
+{% endblock %}

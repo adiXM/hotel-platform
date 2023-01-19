@@ -1,0 +1,70 @@
+{# templates/login/index.html.twig #}
+{% extends '@Admin/adminbase.html.twig' %}
+{% block page_title %}
+    <div class="text-center"><h1>Customers</h1></div>
+{% endblock %}
+{% block content %}
+    <div class="container">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCustomer">New Customer</button>
+
+        <div id="customers">Loading...</div>
+
+    </div>
+
+    <div class="modal fade" id="newCustomer" tabindex="-1" aria-labelledby="newCustomerModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="newCustomerModalLabel">New customer</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {{ form_start(form) }}
+
+                    <div class="modal-body">
+                        {{ form_row(form.firstname) }}
+
+                        {{ form_row(form.lastname) }}
+
+                        {{ form_row(form.email) }}
+
+                        {{ form_row(form.phone) }}
+
+                        {{ form_row(form.plainPassword) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{ form_row(form.save) }}
+                    </div>
+
+                    <script>
+                        let form_errors = '{{ form.vars.errors.form.getErrors(true)|length }}';
+
+                        if(parseInt(form_errors) > 0) {
+                            document.querySelector('[data-bs-target="#newCustomer"]').click();
+                        }
+
+                    </script>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+    {% include '@Admin/partials/modals/_delete_modal.html.twig' %}
+
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+    <script>
+        $(function() {
+            $('#customers').initDataTables({{ datatable_settings(userTable) }}, {
+                searching: true,
+                lengthChange: false
+            }).then(function (dt) {
+                // dt contains the initialized instance of DataTables
+                dt.on('draw', function () {
+
+                })
+            });
+        });
+    </script>
+
+{% endblock %}

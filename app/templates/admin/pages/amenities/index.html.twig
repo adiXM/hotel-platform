@@ -1,0 +1,89 @@
+{# templates/login/index.html.twig #}
+{% extends '@Admin/adminbase.html.twig' %}
+{% block page_title %}
+    <div class="text-center"><h1>Amenities</h1></div>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#amenityTypeModal">New amenity</button>
+
+        <div id="rooms">Loading...</div>
+
+
+        <div class="modal fade" id="amenityTypeModal" tabindex="-1" aria-labelledby="amenityTypeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="amenityTypeModalLabel">Create new amenity</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {{ form_start(form) }}
+
+                    {{ form_errors(form) }}
+
+                    <div class="modal-body">
+
+                        {{ form_row(form.name) }}
+
+                        {{ form_label(form.icon_class) }}
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text h-100 selected-icon"></span>
+                            </div>
+                            {{ form_widget(form.icon_class) }}
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{ form_row(form.save) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% include '@Admin/partials/modals/_delete_modal.html.twig' %}
+
+
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+
+
+    <script>
+        $(function() {
+            $('#rooms').initDataTables({{ datatable_settings(roomsTable) }}, {
+                searching: true,
+                lengthChange: false
+            }).then(function (dt) {
+                // dt contains the initialized instance of DataTables
+                dt.on('draw', function () {
+
+                })
+            });
+        });
+
+        (async () => {
+            const BASE = 'http://{{ app.request.server.get('HTTP_HOST') }}' + '/bootstrap5icons.json';
+
+            const response = await fetch(BASE)
+            const result = await response.json()
+
+            const iconpicker = new Iconpicker(document.querySelector(".iconpicker"), {
+                icons: result,
+                showSelectedIn: document.querySelector(".selected-icon"),
+                searchable: true,
+                selectedClass: "selected",
+                containerClass: "my-picker",
+                hideOnSelect: true,
+                fade: true,
+            });
+
+        })()
+    </script>
+
+{% endblock %}
