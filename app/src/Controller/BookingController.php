@@ -35,7 +35,7 @@ class BookingController  extends AbstractController
     {
         $bookingData = $this->dataManager->getCurrentBookingData($session);
 
-        if($bookingData === null) {
+        if($bookingData === null || (!isset($bookingData['roomTypeId']))) {
             return $this->redirectToRoute('app_homepage');
         }
 
