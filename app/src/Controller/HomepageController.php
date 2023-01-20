@@ -36,23 +36,23 @@ class HomepageController extends AbstractController
             $checkin = $this->helperService->transformDates('m-d-y', $dates['checkin'], 'd-m-Y');
             $checkout = $this->helperService->transformDates('m-d-y', $dates['checkout'], 'd-m-Y');
 
-            $session->set('checkin', $checkin);
-            $session->set('checkout', $checkout);
+            $data = [
+                'checkin'   => $checkin,
+                'checkout'  => $checkout,
+                'adults'    => $searchForm->get('adults')->getData(),
+                'childs'    => $searchForm->get('childs')->getData()
+            ];
 
-            return $this->redirectToRoute('app_search_result', [
-                'dates' => $searchForm->get('dates')->getData(),
-                'adults' => $searchForm->get('adults')->getData(),
-                'childs' => $searchForm->get('childs')->getData(),
-            ]);
+            $this->dataManager->setBookingData($session, $data);
+
+            return $this->redirectToRoute('app_search_result');
         }
 
         $roomTypes = $this->dataManager->getHomepageRooms();
 
-
         foreach($roomTypes as $key => $roomType) {
             $roomTypes[$key]['main_image'] = $this->getParameter('public_media_directory').'/'.$roomType['main_image'];
         }
-
 
         return $this->render('pages/homepage/index.html.twig', [
             'search_form' => $searchForm->createView(),

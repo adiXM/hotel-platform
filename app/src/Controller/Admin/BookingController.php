@@ -8,6 +8,8 @@ use App\Form\Booking\BookingFormType;
 use App\Form\DeleteFormType;
 use App\Form\RoomEditType;
 use App\Service\EntityManagerServices\BookingManagerInterface;
+use App\Service\HelperService;
+use App\Service\SearchServiceInterface;
 use App\Service\TableService;
 use App\Table\BookingTableType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -22,6 +24,8 @@ class BookingController extends AbstractController
     public function __construct(
         private readonly TableService $tableService,
         private readonly BookingManagerInterface $bookingManagerService,
+        private readonly HelperService $helperService,
+        private readonly SearchServiceInterface $searchService,
     )
     {
     }
@@ -49,6 +53,33 @@ class BookingController extends AbstractController
             /** @var Booking $bookingFormData */
             $bookingFormData = $bookingForm->getData();
 
+            $roomType = $bookingFormData->getRoom()->getRoomType();
+            $checkin = $bookingFormData->getCheckin()->format('d-m-Y');
+            $checkout = $bookingFormData->getCheckout()->format('d-m-Y');
+            $adults = $bookingFormData->getAdults();
+            $childs = $bookingFormData->getChilds();
+
+            $canBeBooked = $this->searchService->checkRoomType(
+                $roomType,
+                $checkin, $checkout,
+                []
+            );
+
+            if((int)$adults > $roomType->getAdults() || (int)$childs > $roomType->getChilds()) {
+                $this->addFlash('warning', 'The number of adults or children exceeds the capacity of the room');
+                $canBeBooked =  false;
+            }
+
+            if($canBeBooked === false) {
+                $this->addFlash('warning', 'This room cannot be booked!');
+                return $this->redirectToRoute('admin_bookings');
+            }
+
+            if($bookingFormData->getPrice() === null) {
+                $noNights = $this->helperService->getNumberOfNights($checkin, $checkout);
+                $totalPrice = (float) ((int)$noNights * $roomType->getPrice());
+                $bookingFormData->setPrice($totalPrice);
+            }
             try {
                 $this->bookingManagerService->updateBooking($bookingFormData);
 

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ResultController extends AbstractController
+class CustomPageController extends AbstractController
 {
 
     #[Route('/confirm_booking', name: 'app_confirm_booking')]
@@ -18,4 +18,11 @@ class ResultController extends AbstractController
         ]);
     }
 
+    #[Route('/about', name: 'app_about')]
+    public function about(Request $request): Response
+    {
+        return $this->render('pages/custom_pages/about.html.twig', [
+            'message' => 'Your booking is confirmed!'
+        ]);
+    }
 }

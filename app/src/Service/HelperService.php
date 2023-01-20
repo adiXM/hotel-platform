@@ -17,8 +17,18 @@ class HelperService
         ];
     }
 
-    public function transformDates(string $currentFormat, string $date, $newFormat): string
+    public function transformDates(string $currentFormat, string $date,string $newFormat): string
     {
         return DateTime::createFromFormat($currentFormat, $date)->format($newFormat);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function getNumberOfNights(string $checkin, string $checkout): string
+    {
+        $checkinDate = new DateTime($checkin);
+        $checkoutDate = new DateTime($checkout);
+        return $checkoutDate->diff($checkinDate)->format("%a");
     }
 }

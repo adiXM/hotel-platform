@@ -5,7 +5,7 @@ namespace App\Service;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableFactory;
 
-class TableService
+class TableService implements TableServiceInterface
 {
     public function __construct(private readonly DataTableFactory $dataTableFactory)
     {
