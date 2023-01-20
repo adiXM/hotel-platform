@@ -6,8 +6,37 @@
 {% block content %}
     <div class="container">
 
-        {{ form(form) }}
+        {{ form_start(form) }}
 
+            {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+
+            {{ form_row(form.description) }}
+
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.adults) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.childs) }}
+                </div>
+            </div>
+
+            {{ form_row(form.media_select) }}
+
+        <div class="d-flex">
+            {{ form_row(form.media) }}
+        </div>
+
+
+            {{ form_row(form.amenities) }}
+
+            {{ form_row(form.price) }}
+
+            {{ form_row(form.save) }}
+
+        {{ form_end(form) }}
 
     </div>
 {% endblock %}

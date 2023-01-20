@@ -7,34 +7,28 @@
             <div class="px-3 py-2">
                 <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                        <a href="/" class="align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none logo_normal">
+                            <img width="135" height="45" src="{{ asset('img/logo.png') }}"/>
+                        </a>
+
+                        <a href="/" class="align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none logo_sticky">
+                            <img width="135" height="45" src="{{ asset('img/logo_sticky.png') }}"/>
                         </a>
 
                         <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                             <li>
-                                <a href="{{ path('app_homepage') }}" class="nav-link animated_link text-secondary">
+                                <a href="{{ path('app_homepage') }}" class="nav-link animated_link">
                                     Home
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link animated_link text-white">
-                                    Dashboard
+                                <a href="#" class="nav-link animated_link">
+                                    About us
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link animated_link text-white">
-                                    Orders
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link animated_link text-white">
-                                    Products
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link animated_link text-white">
-                                    Customers
+                                <a href="#" class="nav-link animated_link">
+                                    Contact us
                                 </a>
                             </li>
 
@@ -44,9 +38,8 @@
                                         My Account
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-dark">
-                                        <li><a href="{{ path('admin_room_types') }}" {% if route_name == "admin_room_types" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Bookings</a></li>
-                                        <li><a href="{{ path('admin_room_amenities') }}" {% if route_name == "admin_room_amenities" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Profile</a></li>
-
+                                        <li><a href="{{ path('app_clientarea') }}" {% if route_name == "app_clientarea" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Dashboard</a></li>
+                                        <li><a href="{{ path('app_clientarea_bookings') }}" {% if route_name == "app_clientarea_bookings" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Bookings</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
                                     </ul>

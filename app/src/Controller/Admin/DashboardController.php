@@ -12,10 +12,12 @@ class DashboardController extends AbstractController
     #[Route('/admin', name: 'admin_dashboard')]
     public function index(): Response
     {
-        // Render Page
+
 
         $hasAccess = $this->isGranted('ROLE_ADMIN');
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+
 
         return $this->render('admin/pages/dashboard/index.html.twig');
 

@@ -102,9 +102,19 @@ class BookingController  extends AbstractController
         $checkin = $checkinWeekday.', '.$this->helperService->transformDates('d-m-Y', $bookingData['checkin'], 'M d Y');
         $checkout = $checkoutWeekday.', '.$this->helperService->transformDates('d-m-Y', $bookingData['checkout'], 'M d Y');
 
+
+        try {
+            $noNights = $this->helperService->getNumberOfNights($bookingData['checkin'], $bookingData['checkout']);
+            $totalPrice = (float) ((int)$noNights * $roomType->getPrice());
+        } catch (\Exception $ex) {
+            $this->addFlash('frontend_error', 'Something went wrong! Please contact us!');
+            return $this->redirectToRoute('app_book_room');
+        }
+
         return $this->render('pages/booking/index.html.twig', [
             'bookingCustomerData' => $bookingCustomerData->createView(),
             'roomType' => $roomType,
+            'total_price' => $totalPrice,
             'main_image_path' => $this->getParameter('public_media_directory').'/'.$mainImage->getFileName(),
             'checkin' => $checkin,
             'checkout' => $checkout,

@@ -15,14 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- *
- * TODO: de adaugat numarul de oaspeti (adulti si copii)
- * De adaugat factura
- * De facut functionalitatea care pune pretul in functie de camera selectata
- * De adaugat Setarile site-ului, date care vor aparea si pe factura
- * 
-*/
 
 class BookingFormType extends AbstractType
 {
@@ -42,10 +34,14 @@ class BookingFormType extends AbstractType
                 }
             ])
             ->add('adults', NumberType::class,[
-                'html5' => true
+                'html5' => true,
+                'data' => '0',
+                'attr' => ['min' => 0]
             ])
             ->add('childs', NumberType::class,[
-                'html5' => true
+                'html5' => true,
+                'data' => '0',
+                'attr' => ['min' => 0]
             ])
             ->add('checkin', DateType::class, [
                 'widget' => 'single_text',
@@ -57,7 +53,7 @@ class BookingFormType extends AbstractType
                 'required' => false
             ])
             ->add('price', MoneyType::class, [
-                //'disabled' => true
+                'required' => false
             ])
 
             ->add('save', SubmitType::class, [

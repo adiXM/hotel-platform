@@ -1,0 +1,108 @@
+{# templates/login/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block page_title %}
+    <div class="text-center"><h1>Signup page</h1></div>
+{% endblock %}
+
+{% block main %}
+
+
+    {% block top_section %}
+        <div class="hero standard-height jarallax" data-jarallax="" data-speed="0.2">
+            <img class="jarallax-img" src="{{ asset('img/homepage.jpeg') }}" alt="">
+            <div class="wrapper opacity-mask d-flex align-items-center justify-content-center text-center animate_hero is-transitioned" data-opacity-mask="rgba(0, 0, 0, 0.5)" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="container">
+                    {% block top_section_text %}
+                        <small class="slide-animated one">Luxury Hotel Experience</small>
+                        <h1 class="slide-animated two">About Us</h1>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="container margin_120_95">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-lg-5">
+                <div class="parallax_wrapper inverted">
+                    <img src="{{ asset('img/about_1.jpeg') }}" alt="" class="img-fluid rounded-img">
+                    <div data-cue="slideInUp" class="img_over" data-show="true"
+                         style="animation-name: slideInUp; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 0ms; animation-direction: normal; animation-fill-mode: both;">
+                        <span data-jarallax-element="-30"
+                              style="position: relative; z-index: 0; transform: translate3d(0px, 33.5684px, 0px);"><img
+                                    src="{{ asset('img/home_1.jpeg') }}" alt="" class="rounded-img"><div id="jarallax-container-2"
+                                                                                         style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100; clip-path: polygon(0px 0px, 100% 0px, 100% 100%, 0px 100%);"><div
+                                        style="pointer-events: none; transform-style: preserve-3d; backface-visibility: hidden; position: fixed;"></div></div></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="intro">
+                    <div class="title">
+                        <small>Paradise Hotel</small>
+                        <h2>Our History</h2>
+                    </div>
+                    <p class="lead">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                        doloremque laudantium, totam rem aperiam, eaque ipsa quae ab.</p>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+                        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
+                        fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
+                    <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
+                        consequatur, vel illum qui dolorem eum fugiat quo.</p>
+                    <p><em>Maria...the Owner</em></p>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+
+    <div class="bg_white" style="transform: none;">
+        <div class="container margin_120_95" style="transform: none;">
+            <div style="transform: none;">
+                <div class="row justify-content-between" style="transform: none;">
+                    <div class="col-lg-5 fixed_title" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+
+
+                        <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;"><div class="title">
+                                <small>Paradise Hotel</small>
+                                <h2>Local Amenities</h2>
+                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
+                            </div><div class="list_ok">
+                                <ul>
+                                    <li data-cue="slideInUp" data-delay="200" data-show="true" style="animation-name: slideInUp; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 200ms; animation-direction: normal; animation-fill-mode: both;">
+                                        <h5>Local Restaurants</h5>
+                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur.</p>
+                                    </li>
+                                    <li data-cue="slideInUp" data-delay="300" data-show="true" style="animation-name: slideInUp; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 300ms; animation-direction: normal; animation-fill-mode: both;">
+                                        <h5>Nature</h5>
+                                        <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+                                    </li>
+                                    <li data-cue="slideInUp" data-delay="400" data-show="true" style="animation-name: slideInUp; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 400ms; animation-direction: normal; animation-fill-mode: both;">
+                                        <h5>Art and Culture</h5>
+                                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+                                    </li>
+                                </ul>
+                            </div><div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 560px; height: 1594px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div></div></div>
+                    <div class="col-lg-6 ">
+                        <div data-cue="fadeIn" data-delay="500" data-show="true" style="animation-name: fadeIn; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 500ms; animation-direction: normal; animation-fill-mode: both;">
+                            <figure><img src="{{ asset('img/local_amenities_1.jpeg') }}" alt="" class="img-fluid rounded-img"></figure>
+                        </div>
+                        <div data-cue="fadeIn" data-delay="500" data-show="true" style="animation-name: fadeIn; animation-duration: 600ms; animation-timing-function: ease; animation-delay: 500ms; animation-direction: normal; animation-fill-mode: both;">
+                            <figure>
+                                <img src="{{ asset('img/local_amenities_2.jpeg') }}" alt="" class="img-fluid rounded-img">
+                            </figure>
+                        </div>
+                        <div data-cue="fadeIn" data-delay="500">
+                            <figure>
+                                <img src="{{ asset('img/local_amenities_3.jpeg') }}" alt="" class="img-fluid rounded-img">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /container-->
+    </div>
+
+{% endblock %}

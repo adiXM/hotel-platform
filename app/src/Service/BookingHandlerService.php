@@ -14,6 +14,7 @@ class BookingHandlerService implements BookingHandlerServiceInterface
         private readonly BookingManagerService $bookingManagerService,
         private readonly RoomTypeManagerInterface $roomTypeManager,
         private readonly SearchServiceInterface $searchService,
+        private readonly HelperService $helperService,
     )
     {
     }
@@ -31,9 +32,12 @@ class BookingHandlerService implements BookingHandlerServiceInterface
         $checkin = new \DateTime($bookingData['checkin']);
         $checkout = new \DateTime($bookingData['checkout']);
 
+        $noNights = $this->helperService->getNumberOfNights($bookingData['checkin'], $bookingData['checkout']);
+        $totalPrice = (float) ((int)$noNights * $roomType->getPrice());
+
         if($canBeBooked === true) {
             $booking = new Booking();
-            $booking->setPrice($roomType->getPrice());
+            $booking->setPrice($totalPrice);
             $booking->setCustomer($customer);
             $booking->setRoom($room);
             $booking->setCheckin($checkin);

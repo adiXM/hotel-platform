@@ -39,9 +39,7 @@ class Booking
 
     #[ORM\Column]
     private ?int $childs = null;
-
-
-    //TODO: pret, invoice
+    
 
     public function getId(): ?int
     {

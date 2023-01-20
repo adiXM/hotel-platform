@@ -29,7 +29,7 @@
                         Booking
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ path('admin_rooms') }}" {% if route_name == "admin_rooms" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>All Bookings</a></li>
+                        <li><a href="{{ path('admin_bookings') }}" {% if route_name == "admin_rooms" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>All Bookings</a></li>
                         <li><a href="{{ path('admin_room_amenities') }}" {% if route_name == "admin_room_amenities" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Amenities</a></li>
 
                         <li><hr class="dropdown-divider"></li>

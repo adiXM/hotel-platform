@@ -6,14 +6,11 @@ use App\Entity\Amenity;
 use App\Entity\Booking;
 use App\Entity\Room;
 use App\Entity\RoomType;
-use App\Repository\BookingRepository;
 use App\Repository\RoomTypeRepository;
-use DateTime;
 
 class SearchService implements SearchServiceInterface
 {
     public function __construct(
-        private readonly BookingRepository $bookingRepository,
         private readonly RoomTypeRepository $roomTypeRepository,
         private readonly HelperService $helperService
     )
@@ -25,7 +22,6 @@ class SearchService implements SearchServiceInterface
      */
     public function searchRoomTypes(array $bookingData, array $selectedAmenities): array
     {
-
         $adults = $bookingData['adults'];
         $childs = $bookingData['childs'];
         $checkin = $bookingData['checkin'];
