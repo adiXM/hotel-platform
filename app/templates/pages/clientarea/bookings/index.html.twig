@@ -1,0 +1,60 @@
+{# templates/login/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    {% block top_section %}
+        <div class="hero standard-height jarallax" data-jarallax="" data-speed="0.2">
+            <img class="jarallax-img" src="{{ asset('img/homepage.jpeg') }}" alt="">
+            <div class="wrapper opacity-mask d-flex align-items-center justify-content-center text-center animate_hero is-transitioned" data-opacity-mask="rgba(0, 0, 0, 0.5)" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="container">
+                    {% block top_section_text %}
+                        <small class="slide-animated one">Luxury Hotel Experience</small>
+                        <h1 class="slide-animated two">Account Area</h1>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="container margin_120_95">
+        <div class="rounded d-flex justify-content-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {% include 'partials/_customer_sidebar.html.twig' %}
+                    </div>
+                    <div class="col-md-9">
+                        <div id="bookings">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+
+    <script>
+        $(function() {
+
+            $('#bookings').initDataTables({{ datatable_settings(bookingsTable) }}, {
+                searching: true,
+                lengthChange: false
+            }).then(function (dt) {
+                // dt contains the initialized instance of DataTables
+                dt.on('draw', function () {
+
+                })
+            });
+        });
+    </script>
+
+{% endblock %}
