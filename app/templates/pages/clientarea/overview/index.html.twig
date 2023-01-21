@@ -1,0 +1,71 @@
+{# templates/login/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    {% block top_section %}
+        <div class="hero standard-height jarallax" data-jarallax="" data-speed="0.2">
+            <img class="jarallax-img" src="{{ asset('img/homepage.jpeg') }}" alt="">
+            <div class="wrapper opacity-mask d-flex align-items-center justify-content-center text-center animate_hero is-transitioned" data-opacity-mask="rgba(0, 0, 0, 0.5)" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="container">
+                    {% block top_section_text %}
+                        <small class="slide-animated one">Luxury Hotel Experience</small>
+                        <h1 class="slide-animated two">Account Area</h1>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="container margin_120_95">
+        <div class="rounded d-flex justify-content-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {% include 'partials/_customer_sidebar.html.twig' %}
+                    </div>
+                    <div class="col-md-9">
+                        {% block messages %}
+                            {{ parent() }}
+                        {% endblock %}
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card text-bg-light mb-3 text-center" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Upcoming bookings</h5>
+                                        <h6 class="card-text">{{ upcoming_bookings }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="card text-bg-light mb-3 text-center" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total bookings</h5>
+                                        <h6 class="card-text">{{ total_bookings }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card text-bg-light mb-3 text-center" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total spent</h5>
+                                        <h6 class="card-text">{{ total_spent }} EUR</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}

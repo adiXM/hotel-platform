@@ -1,5 +1,8 @@
 {% block customer_sidebar %}
     <ul class="list-group">
+
+        <a href="{{ path('app_clientarea') }}" {% if route_name == "app_clientarea" %} class="list-group-item active" {% else %} class="list-group-item" {% endif %}>Overview</a>
+
         <a href="{{ path('app_clientarea_profile') }}" {% if route_name == "app_clientarea_profile" %} class="list-group-item active" {% else %} class="list-group-item" {% endif %}>Profile</a>
         <a href="{{ path('app_clientarea_bookings') }}" {% if route_name == "app_clientarea_bookings" %} class="list-group-item active" {% else %} class="list-group-item" {% endif %}>Bookings</a>
     </ul>

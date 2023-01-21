@@ -32,10 +32,6 @@ class CustomerController extends AbstractController
     #[Route('/admin/customers', name: 'admin_customers')]
     public function index(Request $request): Response
     {
-
-        $this->mailerService->sendEmail('gemene_adrian@yahoo.com', 'Confirmation',
-            'Your account is created.');
-
         $hasAccess = $this->isGranted('ROLE_ADMIN');
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 

@@ -3,7 +3,7 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                <img src="{{ asset('img/logo_sticky.png') }}" width="135" height="45" alt="">
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -19,8 +19,6 @@
                         <li><a href="{{ path('admin_room_types') }}" {% if route_name == "admin_room_types" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Room Types</a></li>
                         <li><a href="{{ path('admin_room_amenities') }}" {% if route_name == "admin_room_amenities" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Amenities</a></li>
 
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
 
@@ -32,8 +30,6 @@
                         <li><a href="{{ path('admin_bookings') }}" {% if route_name == "admin_rooms" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>All Bookings</a></li>
                         <li><a href="{{ path('admin_room_amenities') }}" {% if route_name == "admin_room_amenities" %} class="dropdown-item active" {% else %} class="dropdown-item" {% endif %}>Amenities</a></li>
 
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
 
