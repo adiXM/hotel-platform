@@ -15,9 +15,12 @@ class AuthSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onLoginSuccess(LoginSuccessEvent $event): RedirectResponse
+    public function onLoginSuccess(LoginSuccessEvent $event): ?RedirectResponse
     {
         $request = $event->getRequest();
-        return new RedirectResponse($request->get('_target_path'));
+        if($request->get('_target_path') !== null) {
+            return new RedirectResponse($request->get('_target_path'));
+        }
+        return null;
     }
 }
