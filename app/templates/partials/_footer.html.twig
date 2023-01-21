@@ -9,7 +9,7 @@
                 <h5>Contacts</h5>
                 <ul>
                     <li>Baker Street 567, Los Angeles 11023<br>California - US<br><br></li>
-                    <li><strong><a href="#0">info@paradisehotel.com</a></strong></li>
+                    <li><strong><a href="#0">info@mybb.ro</a></strong></li>
                     <li><strong><a href="#0">+434 43242232</a></strong></li>
                 </ul>
                 <div class="social">
@@ -25,12 +25,12 @@
                 <h5>Explore</h5>
                 <div class="footer_links">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="room-list-1.html">Rooms &amp; Suites</a></li>
-                        <li><a href="news-1.html">News &amp; Events</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                        <li><a href="about.html">Terms and Conditions</a></li>
+                        <li><a href="{{ path('app_homepage') }}">Home</a></li>
+                        <li><a href="{{ path('app_about') }}">About Us</a></li>
+                        <li><a href="{{ path('app_login') }}">Login</a></li>
+                        <li><a href="{{ path('app_register') }}">Register</a></li>
+                        <li><a href="{{ path('app_contact') }}">Contact Us</a></li>
+                        <li><a href="#">Terms and Conditions</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <div id="newsletter">
                     <h5>Newsletter</h5>
                     <div id="message-newsletter"></div>
-                    <form method="post" action="phpmailer/newsletter_template_email.php" name="newsletter_form" id="newsletter_form">
+                    <form method="post" action="#" name="newsletter_form" id="newsletter_form">
                         <div class="form-group">
                             <input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Your email">
                             <button type="submit" id="submit-newsletter"><i class="bi bi-send"></i></button>
@@ -50,10 +50,5 @@
         </div>
         <!--/row-->
     </div>
-    <!--/container-->
-    <div class="copy">
-        <div class="container">
-            © Paradise - by <a href="#">Ansonika</a>
-        </div>
-    </div>
+
 </footer>

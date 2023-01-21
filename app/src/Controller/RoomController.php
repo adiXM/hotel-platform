@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Amenity;
+use App\Entity\Media;
 use App\Entity\RoomType;
 use App\Form\Frontend\Homepage\SearchFormType;
 use App\Service\Frontend\DataManagerInterface;
@@ -22,18 +23,28 @@ class RoomController extends AbstractController
     public function index(RoomType $room, Request $request): Response
     {
         $amenities = $room->getAmenities()->getValues();
+        $amenitiesList = [];
         foreach ($amenities as $amenity) {
             $amenitiesList[] = [
                 'name' => $amenity->getName(),
                 'icon_class' => $amenity->getIconClass()
             ];
         }
+
+        $mediaList = $room->getMedia();
+        $mediaRoom = [];
+        /** @var Media $media */
+        foreach($mediaList as $media) {
+            $mediaRoom[] = $this->getParameter('public_media_directory').'/'.$media->getFileName();
+        }
+
         return $this->render('pages/rooms/singleroom.html.twig', [
             'room' => [
                 'name' => $room->getName(),
                 'description' => $room->getDescription(),
                 'price' => $room->getPrice(),
-                'amenities' => $amenitiesList
+                'amenities' => $amenitiesList,
+                'media' => $mediaRoom
             ]
         ]);
     }
