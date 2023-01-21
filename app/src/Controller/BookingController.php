@@ -35,15 +35,17 @@ class BookingController  extends AbstractController
     {
         $bookingData = $this->dataManager->getCurrentBookingData($session);
 
-        if($bookingData === null) {
-            return $this->redirectToRoute('app_homepage');
-        }
 
         $bookingFormAction = $this->createForm(BookingFormType::class);
         $bookingFormAction->handleRequest($request);
 
         if ($bookingFormAction->isSubmitted() && $bookingFormAction->isValid()) {
             $booking = $this->dataManager->getCurrentBookingData($session);
+
+            if($bookingData === null || (!isset($bookingData['roomTypeId']))) {
+                return $this->redirectToRoute('app_homepage');
+            }
+
             /** @var Customer $customer */
             $customer = $this->getUser();
             if($customer === null) {
@@ -58,8 +60,8 @@ class BookingController  extends AbstractController
                 $this->addFlash('frontend_error', 'Someting went wrong with the booking. Please contact us!'. $ex->getMessage());
                 return $this->redirectToRoute('app_homepage');
             }
-
         }
+
 
         $form = $this->createForm(RoomTypeSearchType::class);
         $form->handleRequest($request);
@@ -68,6 +70,10 @@ class BookingController  extends AbstractController
             $roomTypeId = $form->get('roomTypeId')->getData();
             $this->dataManager->setBookingData($session, array_merge(['roomTypeId' => $roomTypeId], $bookingData));
             $bookingData = $this->dataManager->getCurrentBookingData($session);
+        }
+
+        if($bookingData === null || (!isset($bookingData['roomTypeId']))) {
+            return $this->redirectToRoute('app_homepage');
         }
 
         $roomTypeId = $bookingData['roomTypeId'];

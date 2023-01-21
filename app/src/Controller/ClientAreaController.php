@@ -23,7 +23,6 @@ class ClientAreaController extends AbstractController
         private readonly DataManagerInterface $dataManager,
         private readonly CustomerManagerInterface $customerManagerService,
         private readonly TableService $tableService,
-        private readonly BookingManagerInterface $bookingManager
     )
     {
     }
@@ -38,9 +37,30 @@ class ClientAreaController extends AbstractController
         if($customer) {
             $customerFullName = $customer->getFirstName().' '.$customer->getLastName();
         }
-        return $this->render('pages/homepage/index.html.twig', [
+
+        $bookings = $customer->getBookings();
+        $totalSpent = 0;
+        foreach ($bookings as $booking) {
+            $totalSpent += ($booking->getPrice());
+        }
+
+        $upcomingBookings = 0;
+        foreach ($bookings as $booking) {
+            $checkinDate = $booking->getCheckin()->format('Y-m-d');
+            $todayDate = date("Y-m-d");
+            if($checkinDate > $todayDate) {
+                $upcomingBookings++;
+            }
+        }
+
+
+
+        return $this->render('pages/clientarea/overview/index.html.twig', [
             'rooms' => $this->dataManager->getHomepageRooms(),
-            'customer_fullname' => $customerFullName
+            'customer_fullname' => $customerFullName,
+            'total_bookings' => $bookings->count(),
+            'total_spent' => $totalSpent,
+            'upcoming_bookings' => $upcomingBookings
         ]);
     }
 

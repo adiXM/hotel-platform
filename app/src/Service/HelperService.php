@@ -7,7 +7,7 @@ use DateTime;
 class HelperService
 {
 
-    public function getDates(string $dates): array
+    public function getDates(?string $dates): array
     {
         $resultDates = explode('>', $dates);
 
@@ -19,7 +19,11 @@ class HelperService
 
     public function transformDates(string $currentFormat, string $date,string $newFormat): string
     {
-        return DateTime::createFromFormat($currentFormat, $date)->format($newFormat);
+        $datetime = DateTime::createFromFormat($currentFormat, $date);
+        if($datetime === false) {
+            return '';
+        }
+        return $datetime->format($newFormat);
     }
 
     /**

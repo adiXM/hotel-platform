@@ -35,12 +35,12 @@ class BookingFormType extends AbstractType
             ])
             ->add('adults', NumberType::class,[
                 'html5' => true,
-                'data' => '0',
+                'empty_data' => '0',
                 'attr' => ['min' => 0]
             ])
             ->add('childs', NumberType::class,[
                 'html5' => true,
-                'data' => '0',
+                'empty_data' => '0',
                 'attr' => ['min' => 0]
             ])
             ->add('checkin', DateType::class, [
@@ -50,7 +50,8 @@ class BookingFormType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('note', TextareaType::class, [
-                'required' => false
+                'required' => false,
+                'empty_data' => ''
             ])
             ->add('price', MoneyType::class, [
                 'required' => false

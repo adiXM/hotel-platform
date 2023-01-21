@@ -2,6 +2,7 @@
 
 namespace App\Service\EntityManagerServices;
 
+use App\Entity\Booking;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,6 +34,14 @@ class UserManagerService
     public function updateUser(User $userData): void
     {
         $this->entityManager->persist($userData);
+        $this->entityManager->flush();
+    }
+
+    public function removeUser(string $userId): void
+    {
+        /** @var User $user */
+        $user = $this->repository->find($userId);
+        $this->entityManager->remove($user);
         $this->entityManager->flush();
     }
 

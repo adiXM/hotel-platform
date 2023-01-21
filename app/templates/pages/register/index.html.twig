@@ -70,6 +70,8 @@
                     <div class="text-center">
                         <div>Have an account? <a href="{{ path('app_login') }}">Log in</a></div>
                     </div>
+                    <input type="hidden" name="_target_path" value="{{ back_to_your_page }}"/>
+
                     {{ form_end(registrationForm) }}
                 </div>
             </div>

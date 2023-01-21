@@ -7,11 +7,13 @@ use App\Entity\Amenity;
 use App\Entity\Room;
 use App\Form\AmenityFormType;
 use App\Form\DeleteFormType;
+use App\Form\RoomEditType;
 use App\Form\RoomFormType;
 use App\Service\EntityManagerServices\AmenityManagerInterface;
 use App\Service\TableService;
 use App\Table\AmenityTableType;
 use App\Table\RoomTableType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,6 +87,38 @@ class AmenityController extends AbstractController
             'form' => $amenityForm->createView(),
             'deleteForm' => $deleteForm->createView(),
             'roomsTable' => $table
+        ]);
+    }
+
+    #[Route('/admin/amenity/{id}', name: 'admin_edit_amenity')]
+    public function edit(Amenity $amenity, Request $request)
+    {
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $amenityEditForm = $this->createForm(AmenityFormType::class, $amenity);
+
+        $amenityEditForm->handleRequest($request);
+
+        if ($amenityEditForm->isSubmitted() && $amenityEditForm->isValid()) {
+
+            /** @var Amenity $amenityData */
+            $amenityData = $amenityEditForm->getData();
+
+            try {
+                $this->amenityManagerService->updateAmenity($amenityData);
+
+                $this->addFlash('notice', 'Your changes were saved!');
+
+            } catch (\Exception $ex) {
+                $this->addFlash('danger', $ex->getMessage());
+            }
+
+            return $this->redirectToRoute('admin_edit_amenity', ['id' => $amenityData->getId()]);
+        }
+
+        return $this->render('admin/pages/amenities/singlepage.html.twig', [
+            'form' => $amenityEditForm->createView(),
         ]);
     }
 

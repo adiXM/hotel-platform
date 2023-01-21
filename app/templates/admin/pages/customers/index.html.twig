@@ -57,7 +57,6 @@
         $(function() {
             $('#customers').initDataTables({{ datatable_settings(userTable) }}, {
                 searching: true,
-                lengthChange: false
             }).then(function (dt) {
                 // dt contains the initialized instance of DataTables
                 dt.on('draw', function () {

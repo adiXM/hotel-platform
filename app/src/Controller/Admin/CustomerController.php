@@ -2,12 +2,15 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Amenity;
 use App\Entity\Customer;
 use App\Entity\User;
+use App\Form\AmenityFormType;
 use App\Form\Customer\CustomerFormType;
 use App\Form\DeleteFormType;
 use App\Form\UserProfileType;
 use App\Service\EntityManagerServices\CustomerManagerService;
+use App\Service\MailerServiceInterface;
 use App\Service\TableService;
 use App\Table\CustomerTableType;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
@@ -20,7 +23,8 @@ class CustomerController extends AbstractController
 {
     public function __construct(
         private readonly TableService $tableService,
-        private readonly CustomerManagerService $customerManagerService
+        private readonly CustomerManagerService $customerManagerService,
+        private readonly MailerServiceInterface $mailerService
     )
     {
     }
@@ -79,13 +83,45 @@ class CustomerController extends AbstractController
                 $this->addFlash('danger', $ex->getMessage());
             }
 
-            return $this->redirectToRoute('admin_room_amenities');
+            return $this->redirectToRoute('admin_customers');
         }
 
         return $this->render('admin/pages/customers/index.html.twig', [
             'deleteForm' => $deleteForm->createView(),
             'form' => $customerForm->createView(),
             'userTable' => $table
+        ]);
+    }
+
+    #[Route('/admin/customer/{id}', name: 'admin_edit_customer')]
+    public function edit(Customer $customer, Request $request)
+    {
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $customerEditForm = $this->createForm(CustomerFormType::class, $customer);
+
+        $customerEditForm->handleRequest($request);
+
+        if ($customerEditForm->isSubmitted() && $customerEditForm->isValid()) {
+
+            /** @var Customer $customerData */
+            $customerData = $customerEditForm->getData();
+
+            try {
+                $this->customerManagerService->updateUser($customerData);
+
+                $this->addFlash('notice', 'Your changes were saved!');
+
+            } catch (\Exception $ex) {
+                $this->addFlash('danger', $ex->getMessage());
+            }
+
+            return $this->redirectToRoute('admin_edit_customer', ['id' => $customerData->getId()]);
+        }
+
+        return $this->render('admin/pages/customers/singlepage.html.twig', [
+            'form' => $customerEditForm->createView(),
         ]);
     }
 }

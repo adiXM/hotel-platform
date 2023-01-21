@@ -3,18 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Media;
-use App\Entity\Room;
 use App\Entity\RoomType;
 use App\Form\DeleteFormType;
-use App\Form\RoomEditType;
-use App\Form\RoomFormType;
 use App\Form\RoomTypeEditType;
 use App\Form\RoomTypeFormType;
 use App\Service\EntityManagerServices\RoomTypeManagerInterface;
 use App\Service\MediaServiceInterface;
 use App\Service\TableService;
 use App\Table\RoomTypeTableType;
-use Doctrine\ORM\PersistentCollection;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -104,7 +100,7 @@ class RoomTypeController extends AbstractController
     }
 
     #[Route('/admin/rooms/type/{id}', name: 'admin_edit_room_type')]
-    public function edit(RoomType $room, Request $request)
+    public function edit(RoomType $room, Request $request): Response
     {
         $hasAccess = $this->isGranted('ROLE_ADMIN');
         $this->denyAccessUnlessGranted('ROLE_ADMIN');

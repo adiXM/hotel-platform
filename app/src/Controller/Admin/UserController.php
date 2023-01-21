@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Form\DeleteFormType;
 use App\Form\UserProfileType;
 use App\Service\EntityManagerServices\UserManagerService;
 use App\Service\TableService;
@@ -60,9 +61,31 @@ class UserController extends AbstractController
             return $this->redirectToRoute('admin_users');
         }
 
+        $deleteForm = $this->createForm(DeleteFormType::class);
+        $deleteForm->handleRequest($request);
+
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+
+
+            $rowId = $deleteForm->get('rowId')->getData();
+
+            try {
+                $this->userServiceManager->removeUser($rowId);
+
+                $this->addFlash('success', 'Your changes were saved!');
+
+            } catch (\Exception $ex) {
+                $this->addFlash('danger', $ex->getMessage());
+            }
+
+            return $this->redirectToRoute('admin_users');
+        }
+
+
         return $this->render('admin/pages/users/index.html.twig', [
             'form' => $userProfileForm->createView(),
-            'userTable' => $table
+            'userTable' => $table,
+            'deleteForm' => $deleteForm->createView()
         ]);
     }
 
