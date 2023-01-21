@@ -12,7 +12,7 @@ class CustomerTableType implements DataTableTypeInterface
 
     public function configure(DataTable $dataTable, array $options): void
     {
-        $manageButton = '<a class="btn btn-secondary" role="button" href="{{ path(\'admin_edit_users\', {id: row.id}) }}">Manage</a>';
+        $manageButton = '<a class="btn btn-secondary" role="button" href="{{ path(\'admin_edit_customer\', {id: row.id}) }}">Manage</a>';
         $deleteButton = '<button type="button" class="ms-2 btn btn-danger btn-delete" data-rowId="{{ row.id }}" 
                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
                         Delete
