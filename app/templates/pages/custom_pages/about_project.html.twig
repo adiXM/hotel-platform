@@ -1,0 +1,142 @@
+{# templates/login/index.html.twig #}
+{% extends 'base.html.twig' %}
+{% block page_title %}
+{% endblock %}
+
+{% block main %}
+
+
+    {% block top_section %}
+        <div class="hero standard-height jarallax" data-jarallax="" data-speed="0.2">
+            <img class="jarallax-img" src="{{ asset('img/homepage.jpeg') }}" alt="">
+            <div class="wrapper opacity-mask d-flex align-items-center justify-content-center text-center animate_hero is-transitioned" data-opacity-mask="rgba(0, 0, 0, 0.5)" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="container">
+                    {% block top_section_text %}
+                        <small class="slide-animated one">Luxury Hotel Experience</small>
+                        <h1 class="slide-animated two">Despre proiect</h1>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="container margin_120_95">
+        <div class="row">
+
+            <h1 class="text-center">Activitatile unui hotel</h1>
+
+            <h3>Limbaje si technologii folosite</h3>
+            <ul>
+                <li>Symfony 6.1 cu PHP 8.1</li>
+                <li>Twig template engine</li>
+                <li>HTML/CSS</li>
+                <li>Bootrap 5.2</li>
+                <li>Docker (pentru local environment)</li>
+                <li>jQuery</li>
+            </ul>
+
+            <h3>Descrierea proiectului</h3>
+            <div>
+                <p>Proiectul este impartit in 2 module:</p>
+                <ul>
+                    <li>Zona clienti</li>
+                    <li>Zona administrare</li>
+                </ul>
+
+                <p>Exista 3 tipuri de utilizatori: <b>administrator, neinregistrat si inregistrat cu drepturi clar definite.</b></p>
+                <p>Administratorul poate sa creeze, editeze si sa stearga toate entitatile prezente: utilizatorii, clientii, camerele, facilitatile camerei, tipul de camera si rezervarile</p>
+
+                <p>Utilizatorul neinregistrat poate cauta disponibilitatea unei camere pentru o anumita data si un anumit numar de oaspeti, insa fara posibilitatea de a face o rezervare </p>
+
+                <p>Utilizatorul inregistrat poate rezerva o camera si poate accesa panoul de control propriu unde are posiblitatea de a-si modifica profilul si de a-si vedea rezervarile.</p>
+
+                <p>Aplicatia contine si o pagina dinamica unde utilizatorul va putea vedea tipurile de camere listate in modulul de administrare.</p>
+
+                <p>Utilizatorul are de asemenea posibilitatea sa se inregistreze si sa se logheze ulterior in aplicatie.</p>
+
+                <p>Exista si o pagina de contact unde un vizitator poate trimite mesaje catre administratori.</p>
+            </div>
+
+            <h3>Descrierea entitatilor si a relatiilor dintre ele</h3>
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nume entitate</th>
+                        <th scope="col">Descriere</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Customer</td>
+                        <td>Contine date despre clienti si ce rezervari sunt atribuite pentru un client.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>User</td>
+                        <td>Contine date despre administratori</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Room</td>
+                        <td>Contine informatii precum numarul camerei, daca este sau nu activa, tipul de camera si rezervarile atribuite.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Amenity</td>
+                        <td>Contine informatii despre o facilitate ce poate fi atribuita unui tip de camera, cat si o iconita reprezentativa. </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Booking</td>
+                        <td>Contine infomatii despre rezervari si camerele atribuite.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>Media</td>
+                        <td>Contine informatii despre imaginile ce pot fi atribuite unui tip de camera.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>RoomType</td>
+                        <td>Contine informatii despre tipul de camera, ce imagini, camere si facilitati are atribuite.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <p>Relatiile dintre entitatie sunt urmatoarele:</p>
+                    <h6>Many To Many</h6>
+                    <ul>
+                        <li>
+                            Amenity <-> RoomType: Mai multe facilitati poti fi atribuite la mai multe camere.
+                        </li>
+                        <li>
+                            Imagini <-> RoomType: Mai multe imagini poti fi atribuite la mai multe camere.
+                        </li>
+                        <li>
+                            Imagini <-> RoomType: Mai multe imagini poti fi atribuite la mai multe camere.
+                        </li>
+                    </ul>
+                    <h6>One To Many</h6>
+                    <ul>
+                        <li>
+                            Room -> Booking: O camera poate fi atribuita la mai multe rezervari. (date de checkin - checkout diferite)
+                        </li>
+                        <li>
+                            RoomType -> Room: Un tip de camera poate fi atribuita la mai multe camere.
+                        </li>
+                        <li>
+                            Customer -> Booking: Un client poate fi atribuit la mai multe rezervari.
+                        </li>
+                    </ul>
+
+                    <img class="img-fluid" src="{{ asset('img/hotel_db.png') }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

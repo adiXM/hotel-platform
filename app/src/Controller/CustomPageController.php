@@ -18,6 +18,14 @@ class CustomPageController extends AbstractController
         ]);
     }
 
+    #[Route('/about_project', name: 'app_about_project')]
+    public function aboutProject(Request $request): Response
+    {
+        return $this->render('pages/custom_pages/about_project.html.twig', [
+
+        ]);
+    }
+
     #[Route('/about', name: 'app_about')]
     public function about(Request $request): Response
     {
