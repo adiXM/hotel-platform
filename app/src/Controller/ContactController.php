@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Form\Frontend\ContactFormType;
+use App\Service\MailerServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,14 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
 
-    /*
-     * TODO: de facut pagina de contact, de facut mail service si de configurat
-     * De vazut in admin ce mai trebuie facut
-     * Pe frontend de reparat ce mai e pe acolo
-     * de creat pagina clientarea
-     */
-
-    public function __construct()
+    public function __construct(
+        private readonly MailerServiceInterface $mailerService
+    )
     {
     }
 
@@ -33,9 +30,17 @@ class ContactController extends AbstractController
 
             $contactFormData = $contactForm->getData();
 
-            $this->addFlash('success', 'Your message has been sent');
+            if((int)$contactFormData['human'] !== 4) {
+                $contactForm->get('human')->addError(new FormError('The answer is not correct.'));
+            } else {
+                $this->addFlash('success', 'Your message has been sent');
+                $this->mailerService->sendEmail('adrianmarian906@gmail.com',
+                    sprintf('A new message from %s', $contactFormData['name']),
+                    sprintf('Name: %s, Email: %s, Message: %s', $contactFormData['name'], $contactFormData['email'], $contactFormData['message']));
 
-            return $this->redirectToRoute('app_contact');
+                return $this->redirectToRoute('app_contact');
+            }
+
         }
 
         return $this->render('pages/custom_pages/contact.html.twig', [

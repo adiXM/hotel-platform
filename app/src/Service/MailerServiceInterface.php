@@ -4,5 +4,5 @@ namespace App\Service;
 
 interface MailerServiceInterface
 {
-    public function sendEmail($to, $subject, $body): void;
+    public function sendEmail(string $to,string  $subject,string $body, string $from = null): void;
 }

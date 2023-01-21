@@ -12,14 +12,14 @@ class MailService implements MailerServiceInterface
     {
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public function sendEmail($to, $subject, $body): void
+    public function sendEmail(string $to,string $subject,string $body, string $from = null): void
     {
+        if($from === null) {
+            $from = 'adrianmarian906@gmail.com';
+        }
         try {
             $email = (new Email())
-                ->from('adrianmarian906@gmail.com')
+                ->from($from)
                 ->to($to)
                 ->subject($subject)
                 ->text($body);
