@@ -4544,3 +4544,6 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     appearance: none;
 }
+.booking_form .form-control.is-invalid {
+    background-position: center !important;
+}

@@ -70,12 +70,6 @@
         $(function() {
             $('#users').initDataTables({{ datatable_settings(userTable) }}, {
                 searching: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    'copy',
-                    {extend: 'pdf', title: 'domains'},
-                    {extend: 'print'}
-                ]
             }).then(function (dt) {
                 // dt contains the initialized instance of DataTables
                 dt.on('draw', function () {

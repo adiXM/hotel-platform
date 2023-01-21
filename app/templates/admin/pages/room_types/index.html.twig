@@ -63,7 +63,9 @@
         $(function() {
             $('#rooms').initDataTables({{ datatable_settings(roomsTable) }}, {
                 searching: true,
-                lengthChange: false
+                columnDefs: [
+                    { "width": "30%", "targets": 2 }
+                ]
             }).then(function (dt) {
                 // dt contains the initialized instance of DataTables
                 dt.on('draw', function () {

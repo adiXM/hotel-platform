@@ -74,7 +74,8 @@
 
             $('#bookings').initDataTables({{ datatable_settings(bookingsTable) }}, {
                 searching: true,
-                lengthChange: false
+                serverSide: false,
+                pageLength: 10,
             }).then(function (dt) {
                 // dt contains the initialized instance of DataTables
                 dt.on('draw', function () {

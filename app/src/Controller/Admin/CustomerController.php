@@ -79,7 +79,7 @@ class CustomerController extends AbstractController
                 $this->addFlash('danger', $ex->getMessage());
             }
 
-            return $this->redirectToRoute('admin_room_amenities');
+            return $this->redirectToRoute('admin_customers');
         }
 
         return $this->render('admin/pages/customers/index.html.twig', [

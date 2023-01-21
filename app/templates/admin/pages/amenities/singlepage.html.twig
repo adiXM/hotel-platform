@@ -1,0 +1,53 @@
+{# templates/login/index.html.twig #}
+{% extends '@Admin/adminbase.html.twig' %}
+{% block page_title %}
+    <div class="text-center"><h1>Edit amenity</h1></div>
+{% endblock %}
+{% block content %}
+    <div class="container">
+
+        {{ form_start(form) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+
+        {{ form_label(form.icon_class) }}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text h-100 selected-icon"></span>
+            </div>
+            {{ form_widget(form.icon_class) }}
+
+        </div>
+
+        {{ form_row(form.save) }}
+
+        {{ form_end(form) }}
+
+
+    </div>
+
+    <script>
+        (async () => {
+            const BASE = 'http://{{ app.request.server.get('HTTP_HOST') }}' + '/bootstrap5icons.json';
+
+            const response = await fetch(BASE)
+            const result = await response.json()
+
+            const iconpicker = new Iconpicker(document.querySelector(".iconpicker"), {
+                icons: result,
+                showSelectedIn: document.querySelector(".selected-icon"),
+                searchable: true,
+                selectedClass: "selected",
+                containerClass: "my-picker",
+                defaultValue: $("#amenity_form_icon_class").attr('value'),
+                hideOnSelect: true,
+                fade: true,
+            });
+
+            $("#amenity_form_icon_class")[0].onchange();
+        })();
+
+    </script>
+{% endblock %}
